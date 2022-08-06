@@ -1,0 +1,11 @@
+*.json
+*.log
+*/__pycache__/
+healthcheck
+data/
+test_tmp/
+.coverage
+*.info
+*.xml
+codecov
+.coverage.*
