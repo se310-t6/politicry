@@ -1,12 +1,11 @@
 import base64
 import pytest
-from src import create_app, db
+from src import create_app
 
-## Common utils can go here
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def test_client():
-    flask_app = create_app('flask_test.cfg')
+    flask_app = create_app("flask_test.cfg")
 
     # Create a test client using the Flask application configured for testing
     with flask_app.test_client() as testing_client:
@@ -14,10 +13,13 @@ def test_client():
         with flask_app.app_context():
             yield testing_client  # this is where the testing happens!
 
-@pytest.fixture(scope='module')
+
+@pytest.fixture(scope="module")
 def bearer():
-    flask_app = create_app('flask_test.cfg')
+    flask_app = create_app("flask_test.cfg")
     with flask_app.test_client() as client:
-        response = client.get('/api/1/register/')
-        bearer =  'Basic ' + base64.b64encode(bytes(response.json['username'] + ':' + response.json['password'], 'utf-8')).decode('utf-8')
+        response = client.get("/api/1/register/")
+        bearer = "Basic " + base64.b64encode(
+            bytes(response.json["username"] + ":" + response.json["password"], "utf-8")
+        ).decode("utf-8")
         yield bearer
