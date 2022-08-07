@@ -1,6 +1,7 @@
 *.json
 *.log
 */__pycache__/
+__pycache__
 healthcheck
 data/
 test_tmp/
