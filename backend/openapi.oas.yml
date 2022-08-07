@@ -110,7 +110,7 @@ components:
         unique_id:
           type: integer
           description: a unique id for this request, it will be sent back with the response and not stored
-        platform: 
+        platform:
           type: string
           description: the platform the media items were found on
           enum: [reddit, twitter, imgur, instagram]
@@ -205,5 +205,3 @@ paths:
           $ref: '#/components/responses/422'
         '429':
           $ref: '#/components/responses/429'
-
-

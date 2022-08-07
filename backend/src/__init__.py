@@ -2,22 +2,24 @@ from config import Config
 from flask import Flask, request, abort, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+
 # from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_login import LoginManager, current_user
 
 db = SQLAlchemy()
-limiter = Limiter (
+limiter = Limiter(
     key_func=get_remote_address, default_limits=["10000 per day", "50 per minute"]
 )
 migrate = Migrate()
 # cors = CORS()
 login_manager = LoginManager()
 
-#TODO, setup logging
+
+# TODO, setup logging
 def create_app(config_class=Config):
-    app = Flask(__name__, static_url_path='/static', static_folder='../static')
+    app = Flask(__name__, static_url_path="/static", static_folder="../static")
     app.config.from_object(Config)
 
     with app.app_context():
@@ -28,6 +30,7 @@ def create_app(config_class=Config):
         login_manager.init_app(app)
 
         from src.models import Users
+
         @login_manager.request_loader
         def load_user(_):
             auth = request.authorization
@@ -56,18 +59,24 @@ def create_app(config_class=Config):
     app.register_blueprint(blueprint_accounts)
 
     @app.errorhandler(404)
-    def catcher(_):
-        return send_file('../static/notfound.html')
+    def catcher_404(_):
+        return send_file("../static/notfound.html")
 
     @app.errorhandler(500)
-    def catcher(e):
+    def catcher_500(e):
         app.logger.exception("ERROR: A fatal error occurred: %s", e)
         return "internal server error"
 
-    #setup global limits and login requirements
-    limiter.limit("30/minute", error_message="You're doing that too much", key_func=lambda: current_user.username)(blueprint_detection)
-    limiter.limit("60/minute", error_message="You're doing that too much", key_func=get_remote_address)(blueprint_accounts)
+    # setup global limits and login requirements
+    limiter.limit(
+        "30/minute",
+        error_message="You're doing that too much",
+        key_func=lambda: current_user.username,
+    )(blueprint_detection)
+    limiter.limit(
+        "60/minute",
+        error_message="You're doing that too much",
+        key_func=get_remote_address,
+    )(blueprint_accounts)
 
     return app
-
-

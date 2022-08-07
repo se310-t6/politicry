@@ -24,9 +24,9 @@ jobs:
               npm install --global redoc-cli
               redoc-cli build backend/openapi.oas.yml
 
-          
+
           - name: Copy Files
-            run: | 
+            run: |
               mkdir ./docs/
               mv ./redoc-static.html ./docs/index.html
 

@@ -5,7 +5,8 @@ from src.detection import blueprint
 from src.models import Detections, Posts
 from src import db
 
-@blueprint.post('/api/1/posts/')
+
+@blueprint.post("/api/1/posts/")
 @login_required
 def detection_get():
     data = {}
@@ -13,23 +14,23 @@ def detection_get():
         data = json.loads(request.data)
     except Exception as e:
         print(e)
-        return abort(400, 'Invalid JSON')
+        return abort(400, "Invalid JSON")
     finally:
         if data is None or data == {}:
-            return abort(400, 'No JSON found')
+            return abort(400, "No JSON found")
 
     # validate data has all required fields
-    if 'platform' not in data:
-        return abort(400, 'Missing platform')
-    if 'items' not in data:
-        return abort(400, 'Missing items')
-    if not isinstance(data['items'], list):
-        return abort(400, 'Items must be a list')
+    if "platform" not in data:
+        return abort(400, "Missing platform")
+    if "items" not in data:
+        return abort(400, "Missing items")
+    if not isinstance(data["items"], list):
+        return abort(400, "Items must be a list")
 
     posts = []
-    for item in data['items']:
+    for item in data["items"]:
         try:
-            item['platform'] = data['platform']
+            item["platform"] = data["platform"]
             posts.append(Posts.from_json(item))
         except Exception as e:
             return abort(400, e)
@@ -55,12 +56,15 @@ def detection_get():
     # once that system review has been conducted, we can remove all other user data on the post
 
     # return detections as json
-    return jsonify({
-        'platform': data['platform'],
-        'items': [post.to_json() for post in committed_posts]
-    })
+    return jsonify(
+        {
+            "platform": data["platform"],
+            "items": [post.to_json() for post in committed_posts],
+        }
+    )
 
-@blueprint.post('/api/1/detections/')
+
+@blueprint.post("/api/1/detections/")
 @login_required
 def detection_post():
     data = {}
@@ -68,23 +72,23 @@ def detection_post():
         data = json.loads(request.data)
     except Exception as e:
         print(e)
-        return abort(400, 'Invalid JSON')
+        return abort(400, "Invalid JSON")
     finally:
         if data is None or data == {}:
-            return abort(400, 'No JSON found')
+            return abort(400, "No JSON found")
 
     # validate data has all required fields
-    if 'platform' not in data:
-        return abort(400, 'Missing platform')
-    if 'items' not in data:
-        return abort(400, 'Missing items')
-    if not isinstance(data['items'], list):
-        return abort(400, 'Items must be a list')
+    if "platform" not in data:
+        return abort(400, "Missing platform")
+    if "items" not in data:
+        return abort(400, "Missing items")
+    if not isinstance(data["items"], list):
+        return abort(400, "Items must be a list")
 
     posts = []
-    for item in data['items']:
+    for item in data["items"]:
         try:
-            item['platform'] = data['platform']
+            item["platform"] = data["platform"]
             posts.append(Posts.from_json(item, user_id=current_user.id))
         except Exception as e:
             return abort(400, e)
@@ -101,9 +105,21 @@ def detection_post():
             existing_post = post
 
         for detection in detections:
-            existing_detection = db.session.query(Detections).filter_by(user_id=detection.user_id, post_id=existing_post.id, word=detection.word).first()
+            existing_detection = (
+                db.session.query(Detections)
+                .filter_by(
+                    user_id=detection.user_id,
+                    post_id=existing_post.id,
+                    word=detection.word,
+                )
+                .first()
+            )
             if existing_detection is None:
-                new_detection = Detections(user_id=current_user.id, post_id=existing_post.id, word=detection.word)
+                new_detection = Detections(
+                    user_id=current_user.id,
+                    post_id=existing_post.id,
+                    word=detection.word,
+                )
                 db.session.add(new_detection)
 
     db.session.commit()
