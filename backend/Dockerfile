@@ -14,6 +14,7 @@ COPY . .
 # HEALTHCHECK --start-period=5s CMD ["python", "./src/healthcheck.py"]
 
 # add production env
-ENV PYTHON_ENV production
+ENV FLASK_ENV production
+ENV FLASK_APP src/main.py
 
-CMD ["python", "./src/main.py" ]
+CMD ["python", "-m", "flask", "run" , "--host=0.0.0.0", "--port=5000"]
