@@ -1,1 +1,5 @@
 redoc-static.html
+.env
+.dev.env
+letsencrypt/*
+!letsencrypt/.gitkeep

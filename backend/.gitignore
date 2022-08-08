@@ -12,3 +12,4 @@ codecov
 .coverage.*
 *.db
 .pytest_cache
+politicry-pgdata/

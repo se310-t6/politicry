@@ -13,3 +13,7 @@ class Config(object):
         "DATABASE_URL"
     ) or "sqlite:///" + os.path.join(base_dir, "database.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # set port and host for the app
+    PORT = os.environ.get("PORT") or 8000
+    HOST = os.environ.get("HOST") or "localhost"

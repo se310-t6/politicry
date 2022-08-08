@@ -14,14 +14,12 @@ TODO
 **Run Backend:**
 ```bash
 cd backend
-cp .example.env .env
-nano .env # edit as needed
-docker-compose --env-file .env up -d # start the backend
+docker-compose -f docker-compose.dev.yml up -d # start the backend
 
 ## other useful commands ##
 
-docker-compose logs -f # view logs of backend
-docker-compose down # stop the backend
+docker-compose -f docker-compose.dev.yml logs -f # view logs of backend
+docker-compose -f docker-compose.dev.yml down # stop the backend
 ```
 
 **Build Extension:**
@@ -31,6 +29,15 @@ yarn # install modules
 ENVIRONMENT=dev yarn build # build the extension, this will export to extension/dist
 ```
 
+## Deployment
+
+```bash
+cd backend
+cp .example.env .env
+nano .env # update as required
+
+docker-compose -f docker-compose.yml --env-file .env up -d
+```
 
 ## Licensing and Contribution
 Unless otherwise specified, all contributions will be licensed under MIT. For further details see the [contributing guidelines](./CONTRIBUTING_GUIDELINES.md).

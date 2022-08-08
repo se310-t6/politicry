@@ -1,7 +1,9 @@
-FROM python:3
+ARG IMAGE=python:3
+FROM $IMAGE
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
+RUN apt-get install -y postgresql
 
 WORKDIR /usr/src/app
 
@@ -11,10 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# HEALTHCHECK --start-period=5s CMD ["python", "./src/healthcheck.py"]
+ENV PORT=3000
+ENV HOST=localhost
 
-# add production env
-ENV FLASK_ENV production
-ENV FLASK_APP src/main.py
+HEALTHCHECK CMD curl --fail "http://${HOST}:${PORT}/healthcheck" || exit 1
 
-CMD ["python", "-m", "flask", "run" , "--host=0.0.0.0", "--port=5000"]
+CMD ["./scripts/start.sh"]

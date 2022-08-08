@@ -1,0 +1,13 @@
+http:
+  middlewares:
+
+    security-headers:
+      headers:
+        frameDeny: true
+        contentTypeNosniff: true
+        referrerPolicy: no-referrer
+        permissionsPolicy: none
+
+    api-headers:
+      headers:
+        contentSecurityPolicy: default-src 'none'

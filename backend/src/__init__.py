@@ -54,9 +54,11 @@ def create_app(config_class=Config):
 
     from src.detection import blueprint as blueprint_detection
     from src.account import blueprint as blueprint_accounts
+    from src.healthcheck import blueprint as blueprint_healthcheck
 
     app.register_blueprint(blueprint_detection)
     app.register_blueprint(blueprint_accounts)
+    app.register_blueprint(blueprint_healthcheck)
 
     @app.errorhandler(404)
     def catcher_404(_):

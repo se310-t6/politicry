@@ -1,0 +1,87 @@
+version: "3.9"
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:latest
+    privileged: true
+    depends_on:
+      - politicry-api
+      - politicry-db
+
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.file.filename=/etc/traefik/traefik-dynamic.yml
+
+      # Let's Encrypt
+      - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+
+      # Listen for https on 443, and http on 80 which just redirects to https
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.http.tls.certresolver=letsencrypt
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --entrypoints.web.http.redirections.entrypoint.permanent=true
+
+    ports:
+      - 443:443
+      - 80:80
+      - 127.0.0.1:9091:8080
+
+    volumes:
+      - ./letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik-dynamic.yml:/etc/traefik/traefik-dynamic.yml
+
+  politicry-api:
+    container_name: politicry-api
+    restart: unless-stopped
+    image: ghcr.io/politicry/politicry:latest
+
+    depends_on:
+      - politicry-db
+
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DATABASE_URL=postgres://politicry:${DB_PASSWORD}@politicry-db:5432/politicry
+      - BROWSER_BASE_URL=https://${DOMAIN}
+      - SECRET_KEY=${DB_PASSWORD}
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.politicry-api.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.politicry-api.entrypoints=websecure
+      - traefik.http.routers.politicry-api.middlewares=security-headers@file, api-headers@file
+
+  # For production use, it's better to have a separate database container running postgres, instead of sqlite
+  politicry-db:
+    container_name: politicry-db
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=politicry
+      - POSTGRES_USER=politicry
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./politicry-pgdata:/var/lib/postgresql/data
+    # labels:
+    #   - traefik.enable=true
+
+  # Will automatically restart containers if their healthcheck fails
+  politicry-autoheal:
+    container_name: politicry-autoheal
+    restart: unless-stopped
+    image: willfarrell/autoheal
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - traefik
+      - politicry-api
+      - politicry-db

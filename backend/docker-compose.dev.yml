@@ -1,0 +1,66 @@
+version: "3.9"
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:latest
+    privileged: true
+    depends_on:
+      - politicry-api
+      - politicry-db
+
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.file.filename=/etc/traefik/traefik-dynamic.yml
+
+      - --entrypoints.web.address=:80
+
+    ports:
+      - ${APP_PORT:-3000}:80
+      - 127.0.0.1:9091:8080
+
+    volumes:
+      - ./letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik-dynamic.dev.yml:/etc/traefik/traefik-dynamic.yml
+
+  politicry-api:
+    container_name: politicry-api
+    restart: unless-stopped
+    build: .
+
+    depends_on:
+      - politicry-db
+
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_PASSWORD=politicry
+      - DATABASE_URL=postgresql://politicry:politicry@politicry-db:5432/politicry
+      - BROWSER_BASE_URL=https://${APP_HOST:-localhost}:${APP_PORT:-3000}
+      - SECRET_KEY=politicry
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.politicry-api.rule=Host(`${APP_HOST:-localhost}`)
+      - traefik.http.routers.politicry-api.entrypoints=web
+      - traefik.http.routers.politicry-api.middlewares=security-headers@file, api-headers@file
+      - traefik.http.services.politicry-api.loadBalancer.server.port=3000 # required because build can take a while on start
+      # Also allow https
+      - traefik.http.routers.politicry-apiTLS.rule=Host(`${APP_HOST:-localhost}`)
+      - traefik.http.routers.politicry-apiTLS.entrypoints=web
+      - traefik.http.routers.politicry-apiTLS.middlewares=security-headers@file, api-headers@file
+      - traefik.http.routers.politicry-apiTLS.tls=true
+
+  # For production use, it's better to have a separate database container running postgres, instead of sqlite
+  politicry-db:
+    container_name: politicry-db
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=politicry
+      - POSTGRES_USER=politicry
+      - POSTGRES_PASSWORD=politicry
+    volumes:
+      - ./politicry-pgdata:/var/lib/postgresql/data

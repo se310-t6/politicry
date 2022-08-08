@@ -4,3 +4,5 @@ Flask-Limiter==2.5.1
 Flask-Migrate==3.1.0
 Flask-SQLAlchemy==2.5.1
 SQLAlchemy==1.4.32
+waitress==2.1.2
+psycopg2==2.9.3
