@@ -1,0 +1,39 @@
+name: API Docs
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/openapi.oas.yml'
+
+jobs:
+    release:
+        name: GitHub Pages
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: Checkout Repository
+            uses: actions/checkout@v1
+
+          - name: Bundle Api using redoc-cli
+            run: |
+              curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+              sudo apt-get update
+              sudo apt-get upgrade -y
+              sudo apt-get install -y nodejs
+              npm install --global redoc-cli
+              redoc-cli build backend/openapi.oas.yml
+
+          
+          - name: Copy Files
+            run: | 
+              mkdir ./docs/
+              mv ./redoc-static.html ./docs/index.html
+
+          - name: Deploy
+            uses: peaceiris/actions-gh-pages@v3
+            with:
+              github_token: ${{ secrets.GITHUB_TOKEN }}
+              publish_branch: gh-pages
+              publish_dir: ./docs/
+              destination_dir: ./docs

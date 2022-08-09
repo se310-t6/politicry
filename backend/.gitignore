@@ -9,3 +9,5 @@ test_tmp/
 *.xml
 codecov
 .coverage.*
+*.db
+.pytest_cache
