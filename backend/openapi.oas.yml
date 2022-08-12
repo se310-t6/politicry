@@ -28,22 +28,9 @@ components:
             type: string
 
     '429':
-      description: You have made too many requests to the api recently. Implement some form of exponential backoff before trying again.
+      description: You have made too many requests to the api recently. Implement some form of exponential back off before trying again.
 
   schemas:
-    Detection:
-      type: object
-      required:
-        - word
-        - confidence
-      properties:
-        word:
-          type: string
-          description: the word that was detected in plain-text
-        confidence:
-          type: number
-          description: the confidence that the found word truly exists
-
     MediaItemWithoutDetection:
       type: object
       required:
@@ -95,11 +82,11 @@ components:
           type: string
           description: The variety of media item being sent
           enum: ['image', 'video']
-        words:
+        detections:
           type: array
           description: The list of words to upload.
           items:
-            $ref: '#/components/schemas/Detection'
+            type: string
 
     DetectionGet:
       type: object
@@ -110,7 +97,7 @@ components:
         unique_id:
           type: integer
           description: a unique id for this request, it will be sent back with the response and not stored
-        platform: 
+        platform:
           type: string
           description: the platform the media items were found on
           enum: [reddit, twitter, imgur, instagram]
@@ -159,11 +146,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/NewRegistration'
 
-  /api/1/detection:
-    get:
-      summary: Request information on detections for the contained items
+  /api/1/posts:
+    post:
+      summary: Add posts to the api
       requestBody:
-        description: Provide information on the media items you wish to acquire data for.
+        description: Media items to gather data for
         content:
           application/json:
             schema:
@@ -185,10 +172,11 @@ paths:
         '429':
           $ref: '#/components/responses/429'
 
+  /api/1/detections:
     post:
-      summary: Add detections to the api.
+      summary: Add detections to the api
       requestBody:
-        description: The media items to add detections for.
+        description: Media items to add data for
         content:
           application/json:
             schema:
@@ -199,11 +187,12 @@ paths:
       responses:
         '200':
           description: Detections received and accepted.
+          content:
+            plain/text:
+              example: OK
         '400':
           $ref: '#/components/responses/400'
         '422':
           $ref: '#/components/responses/422'
         '429':
           $ref: '#/components/responses/429'
-
-

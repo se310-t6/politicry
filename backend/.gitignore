@@ -1,7 +1,7 @@
 *.json
 *.log
 */__pycache__/
-healthcheck
+__pycache__
 data/
 test_tmp/
 .coverage
@@ -11,3 +11,4 @@ codecov
 .coverage.*
 *.db
 .pytest_cache
+politicry-pgdata/

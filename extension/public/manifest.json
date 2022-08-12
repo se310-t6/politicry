@@ -1,14 +1,14 @@
 {
-    "name": "Politicry",
-    "description": "A tool to remove political posts from popular social media platforms.",
-    "version": "1.0",
-    "manifest_version": 3,
     "action": {},
+    "background": {
+        "service_worker": "background.js"
+    },
+    "description": "A tool to remove political posts from popular social media platforms.",
+    "manifest_version": 3,
+    "name": "Politicry",
     "permissions": [
         "activeTab",
         "scripting"
     ],
-    "background": {
-        "service_worker": "background.js"
-    }
+    "version": "1.0"
 }
