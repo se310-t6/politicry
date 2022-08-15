@@ -89,6 +89,8 @@ header {
     height: 90px;    
 }
 
+/*------- Top: Enabled Sites -------*/
+
 .sites {
     position: absolute;
     width: 178px;
@@ -180,6 +182,108 @@ header {
 
 .sites .global img {
     height: 36px;
+}
+
+
+/*------- Top: Keywords -------*/
+
+.keywords {
+    position: absolute;
+    width: 192px;
+    height: 335px;
+    left: 198px;
+    top: 90px;
+    
+    background: #FFFFFF;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.keywords .btn-container {
+    position: absolute;
+    top: 51px;
+    left: 22px;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #0F8E00;
+    width: 148px;
+    height: 30px;
+}
+
+.keywords .btn-container button {
+    width: 50%;
+    height: 100%;
+    background-color: #999999;
+    border: none;
+    color: white;
+}
+
+.keywords .tag-list {
+    position: absolute;
+    top: 100px;
+    left: 22px;
+    
+    width: 148px;
+
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 7px;
+
+}
+
+.keywords .tag-list .tag-item {
+    padding: 0 12px 0 12px;
+    
+    height: 24px;
+
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+
+    border-radius: 12px;
+    background-color: #C54CCF;
+}
+
+.keywords .tag-list .tag-results-item {
+    padding: 0 12px 0 12px;
+    
+    height: 20px;
+
+    text-align: center;
+    color: #C54CCF;
+    font-weight: 500;;
+    font-size: 16px;
+
+    border-radius: 12px;
+    border: 2px solid #C54CCF;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.keywords .manage-tag-list-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 26px;
+
+    width: 140px;
+    height: 40px;
+    
+    color: white;
+    font-weight: 600;
+
+    background-color: #2196F3;
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+.keywords .manage-tag-list-btn:active {
+    background-color: #47a8f8;
 }
 
 /*------- Switches -------*/
