@@ -1,4 +1,4 @@
-/********** Enabled Sites **********/ 
+/********** Enabled Sites **********/
 
 // UI references
 const toggleList = document.getElementById("toggleList");
@@ -26,7 +26,7 @@ const globalSwitchHandler = () => {
 globalSwitch.onclick = globalSwitchHandler;
 
 
-/********** Keywords **********/ 
+/********** Keywords **********/
 
 // keywords data
 const allowedWordsData = [
@@ -50,7 +50,7 @@ const blockedBtn = document.getElementById("blockedBtn");
 const tagList = document.getElementById("tagList");
 const manageTagListBtn = document.getElementById("manageTagListBtn");
 
-// Helper: 
+// Helper:
 const renderAllowedWords = () => {
     const max = 4;
     const numTagItems = allowedWordsData.length > max ? max : allowedWordsData.length;
@@ -65,7 +65,7 @@ const renderAllowedWords = () => {
     tagList.innerHTML = tagItems + moreResults;
 }
 
-// Helper: 
+// Helper:
 const renderBlockedWords = () => {
     const max = 4;
     const numTagItems = blockedWordsData.length > max ? max : blockedWordsData.length
@@ -73,14 +73,14 @@ const renderBlockedWords = () => {
 
     let tagItems = "";
     const moreResults = numMoreResults > 0 ? `<div class=\"tag-results-item\">${numMoreResults} more</div>` : "";
-    
+
     for (let i=0; i<numTagItems; i++) {
         tagItems += `<div class=\"tag-item\">${blockedWordsData[i]}</div>`;
     }
     tagList.innerHTML = tagItems + moreResults;
 }
 
-// Method: 
+// Method:
 const allowedBtnHandler = () => {
     manageTagListBtn.innerHTML = "Edit Allowed"
     allowedBtn.style.backgroundColor = "#2196F3"
@@ -88,7 +88,7 @@ const allowedBtnHandler = () => {
     renderAllowedWords();
 }
 
-// Method: 
+// Method:
 const blockedBtnHandler = () => {
     manageTagListBtn.innerHTML = "Edit Blocked"
     allowedBtn.style.backgroundColor = "#999999"
@@ -101,4 +101,3 @@ allowedBtn.onclick = allowedBtnHandler;
 blockedBtn.onclick = blockedBtnHandler;
 
 allowedBtnHandler();
-
