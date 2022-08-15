@@ -100,6 +100,5 @@ const blockedBtnHandler = () => {
 allowedBtn.onclick = allowedBtnHandler;
 blockedBtn.onclick = blockedBtnHandler;
 
-
 allowedBtnHandler();
 
