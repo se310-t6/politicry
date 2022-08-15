@@ -18,10 +18,48 @@
             </a>
         </div>
         <div class="version">
-            <span id="version">Version 1.0.0</span>
-            <img src="./images/info-128.png" id="moreInfoBtn"/>
+            <span>Version 1.0.0</span>
+            <img src="./images/info-128.png" id="versionInfoBtn"/>
         </div>
     </header>
+    <div class="content">
+        <div class="top">
+            <div class="sites">
+                <h3>Enabled Sites</h3>
+                <div class="toggle-list" id="toggleList">
+                    <div class="toggle-item">
+                        <img src="./images/icon-reddit-128.png"/>
+                        <label class="switch">
+                            <input type="checkbox" id="redditSwitch">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-item">
+                        <img src="./images/icon-imgur-128.png"/>
+                        <label class="switch">
+                            <input type="checkbox" id="imgurSwitch">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-item">
+                        <img src="./images/icon-twitter-128.png"/>
+                        <label class="switch" >
+                            <input type="checkbox" id="twitterSwitch">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <button id="addOtherSites">Add other sites</button>
+                </div>
+                <div class="global">
+                    <img src="./images/icon-global-128.png"/>
+                    <label class="switch" >
+                        <input type="checkbox" id="globalSwitch">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="popup.js"></script>
 </body>
 </html>
