@@ -16,8 +16,7 @@ const globalSwitchHandler = () => {
 
         toggleList.style.pointerEvents = "none";
         toggleList.style.opacity = "50%";
-    }
-    else {
+    } else {
         toggleList.style.pointerEvents = "auto";
         toggleList.style.opacity = "100%";
     }
