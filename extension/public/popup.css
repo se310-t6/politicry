@@ -404,14 +404,14 @@ footer img {
     position: relative;
     display: inline-block;
   }
-  
+
   .tooltip .tooltiptext {
     width: 238px;
     background-color: rgb(230, 230, 230);
     text-align: center;
     border-radius: 6px;
     padding: 8px 0 10px 12px;
-    
+
     /* Styling text */
     font-weight: 400;
     font-size: 14px;
@@ -438,7 +438,7 @@ footer img {
     width:0;
     height:0;
     position:absolute;
-    
+
     border-right: 8px solid transparent;
     border-left: 8px solid transparent;
     border-bottom:12px solid rgb(230, 230, 230);
