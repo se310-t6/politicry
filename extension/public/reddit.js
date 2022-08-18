@@ -87,7 +87,10 @@ var Reddit = {
 
     // bind the onclick effect to hide all links
     $(".reddit-control.hide_links").click(function () {
-      that.removeLinkAll();
+      if (confirm("Are you sure you want to hide all links?")) {
+        that.removeLinkAll();
+        that.refreshDashboard();
+      }
     });
   },
 
