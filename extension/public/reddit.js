@@ -38,28 +38,6 @@ var Reddit = {
     this.refreshDashboard();
   },
 
-  // calls removeLinkFromDOM to remove a specific post link from the DOM
-  removeLink: function (event) {
-    var hideButton = $(event.currentTarget);
-    var linkElement = hideButton.parents(this.linkSelector);
-    var link = linkElement.attr("id");
-    console.log(link, linkElement);
-    this.removeLinkFromDOM(link);
-    this.refreshDashboard();
-  },
-
-  // called removeLinkFromDOM to remove all loaded posts on the page
-  removeLinkAll: function () {
-    var that = this;
-    var linkElements = $(this.visibleLinkSelector);
-
-    linkElements.each(function (i, e) {
-      var link = $(e).attr("id");
-      that.removeLinkFromDOM(link);
-    });
-    this.refreshDashboard();
-  },
-
   // initalize all UI elements and onclick binding
   setupUI: function () {
     var that = this;
@@ -102,16 +80,35 @@ var Reddit = {
     );
   },
 
-  // retrieve the post link
-  getDOMLinks: function () {
-    return $(this.linkSelector).map(function (i, e) {
-      return $(e).attr("id");
-    });
+  // calls removeLinkFromDOM to remove a specific post link from the DOM
+  removeLink: function (event) {
+    var hideButton = $(event.currentTarget);
+    var linkElement = hideButton.parents(this.linkSelector);
+    var link = linkElement.attr("id");
+
+    this.getDOMLink(linkElement);
+    try {
+      this.getDOMImageLink(linkElement);
+      this.getDOMTitle(linkElement);
+    } catch (e) {
+      console.log(e);
+    }
+
+    this.removeLinkFromDOM(link);
+    this.refreshDashboard();
   },
 
-  // retrive the posts iamge link
-  getDOMImageLinks: function () {
-    // return $(this.linkSelector).map(function(i, e){return $(e).data().fullname}); class="_2_tDEnGMLxpM6uOa2kaDB3
+  // called removeLinkFromDOM to remove all loaded posts on the page
+  // can use this method to call our image processing on all posts automatically
+  removeLinkAll: function () {
+    var that = this;
+    var linkElements = $(this.visibleLinkSelector);
+
+    linkElements.each(function (i, e) {
+      var link = $(e).attr("id");
+      that.removeLinkFromDOM(link);
+    });
+    this.refreshDashboard();
   },
 
   // remove post from DOM (page)
@@ -125,6 +122,26 @@ var Reddit = {
   restoreDOM: function () {
     $(this.listSelector + " " + this.hiddenLinkSelector).show();
     $(".reddit-action").show();
+  },
+
+  // retrieve the post link
+  getDOMLink: function (linkElement) {
+    urlSelector = ".SQnoC3ObvgnGjWt90zD9Z";
+    var url = linkElement.find(urlSelector).attr("href");
+    console.log("www.reddit.com" + url); // DEBUG
+  },
+
+  // retrive the posts iamge link
+  getDOMImageLink: function (linkElement) {
+    urlSelector = "._2_tDEnGMLxpM6uOa2kaDB3";
+    var url = linkElement.find(urlSelector).attr("src");
+    console.log(url); // DEBUG
+  },
+
+  getDOMTitle: function (linkElement) {
+    titleSelector = "._eYtD2XCVieq6emjKBH3m";
+    var title = linkElement.find(titleSelector).text();
+    console.log(title); // DEBUG
   },
 };
 
