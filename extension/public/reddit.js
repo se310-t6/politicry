@@ -13,7 +13,7 @@ var Reddit = {
 
   //counter for checkForUpdate
   counter: 0,
-  refreshFrequency: 150,
+  refreshFrequency: 100,
 
   // initalize
   initialize: function () {
