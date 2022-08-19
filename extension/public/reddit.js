@@ -11,8 +11,9 @@ var Reddit = {
   // CSS selector for the Reddit posts list
   listSelector: ".rpBJOHq2PR60pnwJlUyP0",
 
+  //counter for checkForUpdate
   counter: 0,
-  refreshFrequency: 100,
+  refreshFrequency: 150,
 
   // initalize
   initialize: function () {
@@ -20,13 +21,15 @@ var Reddit = {
     this.checkForUpdate();
   },
 
+  //listener to scroll events
+  //updates new visible posts to be filtered
   checkForUpdate: function(){
     document.addEventListener('scroll', (ev) => {
       this.counter++;
-      console.log(this.counter);
       if(this.counter == this.refreshFrequency){
         this.counter = 0;
         this.blurImage();
+        console.log("updated");
       }
     });
   },
@@ -46,11 +49,20 @@ var Reddit = {
     console.log("setup post UI");
   },
 
-  // calls removeLinkFromDOM to remove a specific post link from the DOM
-  removeLink: function (event) {
-    var button = event.currentTarget;
-    var post = button.parentNode.parentNode;
-    var link = post.getAttribute("id");
+  //check if any configured keywords are found in a post
+  //return true if found
+  filterText: function(linkElement) {
+      var that = this
+      //temporary filter data
+      //these data must be stored in cookie
+      const blockedWordsData = [
+        "ezy",
+        "jacinda",
+        "communism",
+        "racism",
+        "isis",
+        "pizza"
+      ];
 
     this.getDOMTitle(post);
     this.getDOMLink(post);
@@ -63,16 +75,32 @@ var Reddit = {
     this.removeLinkFromDOM(link);
   },
 
-  // called removeLinkFromDOM to remove all loaded posts on the page
-  // can use this method to call our image processing on all posts automatically
-  removeLinkAll: function () {
-    var posts = document.querySelectorAll(this.linkSelector);
-    // console.log("Found " + posts.length + " Visible posts");
-    // console.log(posts);
-    posts.forEach((post) => {
-      post.style.display = "none";
-      post.querySelector(".reddit-action").style.display = "none";
+  //blurs the image in a post when blocked keyword is found
+  blurImage: function () {
+    var that = this;
+    var linkElements = $(this.visibleLinkSelector);
 
+    linkElements.each(function (i, e) {
+      var link = $(e).attr("id");
+      //link(id) of promotions in reddit exceed 50 characters
+      const linkMaxLength = 50;
+      if(link.length < linkMaxLength){
+        //locating current post's class id
+        var linkElement = $("[id=" + link + "]");
+        console.log(linkElement); //DEBUG
+        //checking if current post contains blocked keyword
+        if(that.filterText(linkElement)) {
+          const imageLink = that.getDOMImageLink(linkElement);
+          //checking if the post contains image
+          if(imageLink != null){
+            console.log(document.getElementsByClassName(link));
+            document.getElementById(link).style.filter = "blur(5Px)";
+          }else{ //removes link if no images found.
+            that.removeLinkFromDOM(link);
+          }
+        }
+      }
+      
     });
   },
 
