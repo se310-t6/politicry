@@ -3,7 +3,7 @@
         "default_popup": "popup.html"
     },
     "background": {
-        "service_worker": "background.js"
+        
     },
     "content_scripts": [
         {
@@ -26,5 +26,13 @@
         "activeTab",
         "scripting"
     ],
-    "version": "1.0"
+
+    "version": "1.0",
+    "content_scripts": [
+        {
+          "matches": ["https://www.reddit.com/*", "https://www.imgur.com/*"],
+          "js": ["jquery-1.10.2.min.js", "reddit.js"],
+          "css": ["reddit.css"]
+        }
+      ]
 }
