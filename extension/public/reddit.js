@@ -1,3 +1,4 @@
+
 var Reddit = {
   // CSS selector for Reddit links
   linkSelector: ".scrollerItem[id]",
@@ -51,28 +52,63 @@ var Reddit = {
 
   //check if any configured keywords are found in a post
   //return true if found
-  filterText: function(linkElement) {
+  async filterText (linkElement,callBack) {
       var that = this
       //temporary filter data
       //these data must be stored in cookie
       const blockedWordsData = [
-        "ezy",
-        "jacinda",
-        "communism",
-        "racism",
+        "denr",
+        "nobody",
+        "taranaki",
+        "covid",
         "isis",
         "pizza"
       ];
 
-    this.getDOMTitle(post);
-    this.getDOMLink(post);
-    try {
-      this.getDOMImageLink(post);
-    } catch (e) {
-      console.log("Not an image" + e);
-    }
-    // this.blurImage(post);
-    this.removeLinkFromDOM(link);
+      const title = that.getDOMTitle(linkElement).toLowerCase();
+      const description = that.getDOMDescription(linkElement).toLowerCase();
+      //image varible contain image url then contain result of ocr
+      let image = that.getDOMImageLink(linkElement);
+
+      if(image != null){
+        image = await that.ocr(image);
+        image = image.toLowerCase();
+        callBack();
+      }else{
+        image = "n/a"
+      }
+      console.log(image);
+      //search if blockedwords are in the title
+      //true if found
+      for (i in blockedWordsData){
+        console.log("pass");
+        if(title.search(blockedWordsData[i]) != -1){
+          return true;
+        }else if (image.search(blockedWordsData[i]) != -1){
+          return true;
+        }else if (description.search(blockedWordsData[i]) != -1){
+          return true;
+        }
+      }
+      return false;
+  },
+
+  //extract text from image using tesseract
+  //returns text
+  async ocr (url) {
+    
+    const { createWorker } = Tesseract;
+    const worker = createWorker ({
+      logger: m => console.log(m)
+    });
+    
+    await worker.load();
+    await worker.loadLanguage('eng');
+    await worker.initialize('eng');
+    const { data: { text } } = await worker.recognize(url);
+    await worker.terminate();
+    return text;
+
   },
 
   //blurs the image in a post when blocked keyword is found
@@ -89,18 +125,21 @@ var Reddit = {
         var linkElement = $("[id=" + link + "]");
         console.log(linkElement); //DEBUG
         //checking if current post contains blocked keyword
-        if(that.filterText(linkElement)) {
-          const imageLink = that.getDOMImageLink(linkElement);
-          //checking if the post contains image
-          if(imageLink != null){
-            console.log(document.getElementsByClassName(link));
-            document.getElementById(link).style.filter = "blur(5Px)";
-          }else{ //removes link if no images found.
-            that.removeLinkFromDOM(link);
+        const promise = that.filterText(linkElement,function () {console.log("ocr done");})
+        .then(function(isFound){
+          console.log(isFound);
+          if(isFound) {
+            const imageLink = that.getDOMImageLink(linkElement);
+            //checking if the post contains image
+            if(imageLink != null){
+              console.log(document.getElementsByClassName(link));
+              document.getElementById(link).style.filter = "blur(5Px)";
+            }else{ //removes link if no images found.
+              that.removeLinkFromDOM(link);
+            }
           }
-        }
+        });
       }
-      
     });
   },
 
