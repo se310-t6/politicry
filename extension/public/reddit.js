@@ -18,7 +18,7 @@ var Reddit = {
       '<div class="reddit-status total_hidden"><span class="variable"></span>Total hidden</div>';
     h += "</div>";
     h += '<div class="reddit-controls">';
-    h += '<div class="reddit-control hide_links">Hide all</div>';
+    h += '<div class="reddit-control hide_links">Load Hide Buttons</div>';
     h += '<div class="reddit-control unhide_links">Unhide all</div>';
     h += "</div>";
     h += "</div>";
@@ -46,16 +46,15 @@ var Reddit = {
     document
       .querySelector(".reddit-control.hide_links")
       .addEventListener("click", () => {
-        this.removeLinkAll();
+        this.setupPostUI();
         console.log("all links hidden");
       });
-
-      this.setupPostUI();
   },
 
   setupPostUI: function () {
     // adds hide button to each Reddit post
     posts = document.querySelectorAll(this.linkSelector);
+    console.log(posts);
     posts.forEach((post) => {
       post.innerHTML += this.hideLinkHTML();
       post
