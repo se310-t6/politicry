@@ -1,95 +1,73 @@
-
 var Reddit = {
   // CSS selector for Reddit links
   linkSelector: ".scrollerItem[id]",
 
-  // CSS selector for hidden links
-  hiddenLinkSelector: ".scrollerItem[id]:hidden",
-
-  // CSS selector for visible links
-  visibleLinkSelector: ".scrollerItem[id]:visible",
-
   // CSS selector for the Reddit posts list
   listSelector: ".rpBJOHq2PR60pnwJlUyP0",
-
+  
   //counter for checkForUpdate
   counter: 0,
   refreshFrequency: 100,
 
   // initalize
   initialize: function () {
-    this.blurImage();
-    this.checkForUpdate();
+      this.blurImage();
+      this.checkForUpdate();
   },
 
   //listener to scroll events
   //updates new visible posts to be filtered
   checkForUpdate: function(){
-    document.addEventListener('scroll', (ev) => {
+      document.addEventListener('scroll', (ev) => {
       this.counter++;
       if(this.counter == this.refreshFrequency){
-        this.counter = 0;
-        this.blurImage();
-        console.log("updated");
+          this.counter = 0;
+          this.blurImage();
+          console.log("updated");
       }
-    });
+      });
   },
 
-  setupPostUI: function () {
-    // adds hide button to each Reddit post
-    posts = document.querySelectorAll(this.linkSelector);
-    console.log(posts);
-    posts.forEach((post) => {
-      post.innerHTML += this.hideLinkHTML();
-      post
-        .querySelector(".reddit-action.hide")
-        .addEventListener("click", (event) => {
-          this.removeLink(event);
-        });
-    });
-    console.log("setup post UI");
-  },
+  
 
   //check if any configured keywords are found in a post
   //return true if found
-  async filterText (linkElement,callBack) {
-      var that = this
+  async filterText (post,callBack) {
       //temporary filter data
       //these data must be stored in cookie
       const blockedWordsData = [
-        "denr",
-        "nobody",
-        "taranaki",
-        "covid",
-        "isis",
-        "pizza"
+          "denr",
+          "nobody",
+          "taranaki",
+          "covid",
+          "isis",
+          "pizza"
       ];
 
-      const title = that.getDOMTitle(linkElement).toLowerCase();
-      const description = that.getDOMDescription(linkElement).toLowerCase();
+      const title = this.getDOMTitle(post);
+      const description = this.getDOMDescription(post);
       //image varible contain image url then contain result of ocr
-      let image = that.getDOMImageLink(linkElement);
+      let image = this.getDOMImageLink(post);
 
-      if(image != null){
-        image = await that.ocr(image);
-        image = image.toLowerCase();
-        //callback to wait ocr to be processed
-        callBack();
-      }else{
-        image = "n/a"
+      if(image != "n/a"){
+          image = await this.ocr(image);
+          image = image.toLowerCase();
+          //callback to wait ocr to be processed
+          callBack();
       }
+
       console.log(image);
       //search if blockedwords are in the title
       //true if found
       for (i in blockedWordsData){
-        console.log("pass");
-        if(title.search(blockedWordsData[i]) != -1){
-          return true;
-        }else if (image.search(blockedWordsData[i]) != -1){
-          return true;
-        }else if (description.search(blockedWordsData[i]) != -1){
-          return true;
-        }
+          console.log("pass");
+          if(title.search(blockedWordsData[i]) != -1){
+            return true;
+          }else if (image.search(blockedWordsData[i]) != -1){
+            return true;
+          }else if (description.search(blockedWordsData[i]) != -1){
+            return true;
+          }
       }
       return false;
   },
@@ -97,71 +75,53 @@ var Reddit = {
   //extract text from image using tesseract
   //returns text
   async ocr (url) {
-    
-    const { createWorker } = Tesseract;
-    const worker = createWorker ({
+      
+      const { createWorker } = Tesseract;
+      const worker = createWorker ({
       logger: m => console.log(m)
-    });
-    
-    await worker.load();
-    await worker.loadLanguage('eng');
-    await worker.initialize('eng');
-    const { data: { text } } = await worker.recognize(url);
-    await worker.terminate();
-    return text;
+      });
+      
+      await worker.load();
+      await worker.loadLanguage('eng');
+      await worker.initialize('eng');
+      const { data: { text } } = await worker.recognize(url);
+      await worker.terminate();
+      return text;
 
   },
 
   //blurs the image in a post when blocked keyword is found
   blurImage: function () {
-    var that = this;
-    var linkElements = $(this.visibleLinkSelector);
+      var posts = document.querySelectorAll(this.linkSelector);
 
-    linkElements.each(function (i, e) {
-      var link = $(e).attr("id");
+      posts.forEach((post) => {
+      var link = post.getAttribute("id");
       //link(id) of promotions in reddit exceed 50 characters
       const linkMaxLength = 50;
       if(link.length < linkMaxLength){
-        //locating current post's class id
-        var linkElement = $("[id=" + link + "]");
-        console.log(linkElement); //DEBUG
-        //checking if current post contains blocked keyword
-        //promise has to be processed to retrieve result data
-        const promise = that.filterText(linkElement,function () {console.log("ocr done");})
-        .then(function(isFound){
+
+          //checking if current post contains blocked keyword
+          //promise has to be processed to retrieve result data
+          const promise = this.filterText(post,function () {console.log("ocr done");})
+          .then(function(isFound){
           //isFound = result of promise
           //true if found
           console.log(isFound); // debug
           if(isFound) {
-            const imageLink = that.getDOMImageLink(linkElement);
-            //checking if the post contains image
-            if(imageLink != null){
               console.log(document.getElementsByClassName(link));
               document.getElementById(link).style.filter = "blur(5Px)";
-            }else{ //removes link if no images found.
-              that.removeLinkFromDOM(link);
-            }
+              //removes link if no images found.
+              //this.removeLinkFromDOM(link);
           }
-        });
+          });
       }
-    });
+      });
   },
 
   // remove post from DOM (page)
   removeLinkFromDOM: function (_link) {
     document.querySelector("[id=" + _link + "]").style.display = "none";
     document.querySelector("[id=" + _link + "] .reddit-action").style.display = "none";
-  },
-
-  // restore all hidden posts
-  restoreDOM: function () {
-    var posts = document.querySelectorAll(this.linkSelector);
-    // console.log("Found " + posts.length + " Visible posts");
-    // console.log(posts);
-    posts.forEach((post) => {
-      post.style.display = "block";
-      post.querySelector(".reddit-action").style.display = "block";
-    });
   },
 
   // retrieve the post link
@@ -174,21 +134,40 @@ var Reddit = {
   // retrive the posts iamge link
   getDOMImageLink: function (_post) {
     classSelector = "._2_tDEnGMLxpM6uOa2kaDB3";
-    var url = _post.querySelector(classSelector).getAttribute("src");
-    console.log("image url: " + url); // DEBUG
+    var url = _post.querySelector(classSelector);
+    if(url != null){
+      url = url.getAttribute("src");
+      console.log("image url: " + url); // DEBUG
+      return url;
+    }else{
+      return "n/a";
+    }
   },
 
   getDOMTitle: function (_post) {
     classSelector = "._eYtD2XCVieq6emjKBH3m";
-    var title = _post.querySelector(classSelector).textContent;
-    console.log("post title: " + title); // DEBUG
+    var title = _post.querySelector(classSelector);
+    if(title != null){
+      title = title.textContent.toLowerCase();
+      console.log("post title: " + title); // DEBUG
+      return title;
+    }else{
+      return "n/a";
+    }
   },
 
-  blurImage: function (_post) {
-    classSelector = "._2_tDEnGMLxpM6uOa2kaDB3";
-    var image = _post.querySelector(classSelector);
-    image.style.filter = "blur(5px)";
-  },
+  //retrieve the posts description
+  getDOMDescription: function (_post) {
+      descriptionSelector = "._292iotee39Lmt0MkQZ2hPV";
+      var description = _post.querySelector(descriptionSelector);
+      if(description != null){
+        description = description.textContent.toLowerCase();
+        console.log("post description: " + description); // DEBUG
+        return description;
+      }else{
+        return "n/a";
+      }
+  }
 };
 
 Reddit.initialize();

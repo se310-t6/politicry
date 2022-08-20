@@ -3,7 +3,7 @@
         "default_popup": "popup.html"
     },
     "background": {
-        
+        "service_worker": "background.js"
     },
     "content_scripts": [
         {
@@ -11,7 +11,7 @@
                 "reddit.css"
             ],
             "js": [
-                "reddit.js"
+                "tesseract.min.js","reddit.js"
             ],
             "matches": [
                 "https://www.reddit.com/*",
@@ -27,11 +27,6 @@
         "scripting"
     ],
 
-    "version": "1.0",
-    "content_scripts": [
-        {
-          "matches": ["https://www.reddit.com/*", "https://www.imgur.com/*"],
-          "js": ["jquery-1.10.2.min.js", "tesseract.min.js","reddit.js"]
-        }
-    ]
+    "version": "1.0"
+
 }
