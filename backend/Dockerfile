@@ -16,6 +16,6 @@ COPY . .
 ENV PORT=3000
 ENV HOST=localhost
 
-HEALTHCHECK CMD curl --fail "http://${HOST}:${PORT}/healthcheck" || exit 1
+# HEALTHCHECK CMD curl --fail "http://${HOST}:${PORT}/healthcheck" || exit 1
 
 CMD ["./scripts/start.sh"]
