@@ -5,6 +5,20 @@
     "background": {
         "service_worker": "background.js"
     },
+    "content_scripts": [
+        {
+            "css": [
+                "reddit.css"
+            ],
+            "js": [
+                "reddit.js"
+            ],
+            "matches": [
+                "https://www.reddit.com/*",
+                "https://www.imgur.com/*"
+            ]
+        }
+    ],
     "description": "A tool to remove political posts from popular social media platforms.",
     "manifest_version": 3,
     "name": "Politicry",
@@ -12,12 +26,5 @@
         "activeTab",
         "scripting"
     ],
-    "version": "1.0",
-    "content_scripts": [
-        {
-          "matches": ["https://www.reddit.com/*", "https://www.imgur.com/*"],
-          "js": ["reddit.js"],
-          "css": ["reddit.css"]
-        }
-      ]
+    "version": "1.0"
 }
