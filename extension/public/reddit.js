@@ -73,6 +73,7 @@ var Reddit = {
       if(image != null){
         image = await that.ocr(image);
         image = image.toLowerCase();
+        //callback to wait ocr to be processed
         callBack();
       }else{
         image = "n/a"
@@ -125,9 +126,12 @@ var Reddit = {
         var linkElement = $("[id=" + link + "]");
         console.log(linkElement); //DEBUG
         //checking if current post contains blocked keyword
+        //promise has to be processed to retrieve result data
         const promise = that.filterText(linkElement,function () {console.log("ocr done");})
         .then(function(isFound){
-          console.log(isFound);
+          //isFound = result of promise
+          //true if found
+          console.log(isFound); // debug
           if(isFound) {
             const imageLink = that.getDOMImageLink(linkElement);
             //checking if the post contains image
