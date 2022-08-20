@@ -20,18 +20,18 @@
         }
     ],
     "description": "A tool to remove political posts from popular social media platforms.",
+    "icons": {
+        "128": "/images/logo-128.png",
+        "16": "/images/logo-16.png",
+        "48": "/images/logo-48.png"
+    },
     "manifest_version": 3,
     "name": "Politicry",
-    "icons":{
-        "16":"/images/logo-16.png",
-        "48":"/images/logo-48.png",
-        "128":"/images/logo-128.png"
-    },
-    "page_action":{
-        "default_icon":{
-            "16":"/images/logo-16.png",
-            "48":"/images/logo-48.png",
-            "128":"/images/logo-128.png"
+    "page_action": {
+        "default_icon": {
+            "128": "/images/logo-128.png",
+            "16": "/images/logo-16.png",
+            "48": "/images/logo-48.png"
         }
     },
     "permissions": [
@@ -39,5 +39,4 @@
         "scripting"
     ],
     "version": "1.0"
-    
 }
