@@ -39,7 +39,7 @@ services:
       - ./traefik-dynamic.yml:/etc/traefik/traefik-dynamic.yml
 
   politicry-frontend:
-    container_name: website
+    container_name: politicry-frontend
     build: ./website
     restart: always
     depends_on:
@@ -51,9 +51,9 @@ services:
       - BROWSER_BASE_URL=https://${DOMAIN}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)
-      - traefik.http.routers.frontend.entrypoints=websecure
-      - traefik.http.routers.frontend.middlewares=security-headers@file
+      - traefik.http.routers.politicry-frontend.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.politicry-frontend.entrypoints=websecure
+      - traefik.http.routers.politicry-frontend.middlewares=security-headers@file
 
   politicry-api:
     container_name: politicry-api

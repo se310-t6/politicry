@@ -27,7 +27,7 @@ services:
       - ./traefik-dynamic.dev.yml:/etc/traefik/traefik-dynamic.yml
 
   politicry-frontend:
-    container_name: frontend-dev
+    container_name: politicry-frontend
     build:
       context: ./website
     restart: always
@@ -40,15 +40,15 @@ services:
       - BROWSER_BASE_URL=http://${APP_HOST:-localhost}:${APP_PORT:-3000}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.frontend.rule=Host(`${APP_HOST:-localhost}`)
-      - traefik.http.routers.frontend.entrypoints=web
-      - traefik.http.routers.frontend.middlewares=security-headers@file
+      - traefik.http.routers.politicry-frontend.rule=Host(`${APP_HOST:-localhost}`)
+      - traefik.http.routers.politicry-frontend.entrypoints=web
+      - traefik.http.routers.politicry-frontend.middlewares=security-headers@file
       # Also allow https
-      - traefik.http.routers.frontendTLS.rule=Host(`${APP_HOST:-localhost}`)
-      - traefik.http.routers.frontendTLS.entrypoints=web
-      - traefik.http.routers.frontendTLS.middlewares=security-headers@file
-      - traefik.http.routers.frontendTLS.tls=true
-      - traefik.http.services.frontend.loadBalancer.server.port=3000 # required because build can take a while on start
+      - traefik.http.routers.politicry-frontendTLS.rule=Host(`${APP_HOST:-localhost}`)
+      - traefik.http.routers.politicry-frontendTLS.entrypoints=web
+      - traefik.http.routers.politicry-frontendTLS.middlewares=security-headers@file
+      - traefik.http.routers.politicry-frontendTLS.tls=true
+      - traefik.http.services.politicry-frontend.loadBalancer.server.port=3000 # required because build can take a while on start
     volumes:
       - ./website:/app:z
 
