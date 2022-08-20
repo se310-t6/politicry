@@ -6,7 +6,7 @@
         </header>
         <div class="card-content">
             <figure class="image">
-                <img v-lazy-load class="is-rounded" :src="require(`~/assets/${image}`)"/>
+                <img v-lazy-load class="is-rounded" :src="require(`~/assets/${image}`)" alt="Developer profile picture"/>
             </figure>
         </div>
         <footer class="card-footer">

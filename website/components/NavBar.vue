@@ -2,7 +2,7 @@
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item ml-2" href="#">
-                <img src="~/assets/titled-logo.png" width="112" height="28">
+                <img src="~/assets/titled-logo.png" alt="The Politicry logo" width="112" height="28">
             </a>
 
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navBar">
