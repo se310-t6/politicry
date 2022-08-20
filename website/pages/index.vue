@@ -70,14 +70,14 @@
 					blurb="Backend developer, enjoys tinkering with electronics in his free time."
 				/>
 
-				<!-- <ProfileCard
+				<ProfileCard
 					class="column"
-					name="Lang Chen"
-					image="profiles/jo.jpeg"
-					github=""
-					linkedin=""
-					blurb=""
-				/> -->
+					name="Lang Cheng"
+					image="profiles/lang.jpg"
+					github="https://github.com/langisme"
+					linkedin="www.linkedin.com/in/lang-cheng-162327219"
+					blurb="A front-end engineer who's interested in graphic design, makes burgers part time."
+				/>
 
 				<ProfileCard
 					class="column"
@@ -85,17 +85,17 @@
 					image="profiles/ryan.jpg"
 					github="https://github.com/Zasheus"
 					linkedin="https://www.linkedin.com/in/ryan-mardiono/"
-					blurb="Passionate Full Stack developer, enjoys making and learning new things"
+					blurb="Passionate Full Stack developer, enjoys making and learning new things."
 				/>
 
-				<!-- <ProfileCard
+				<ProfileCard
 					class="column"
 					name="Leonard Min"
-					image="profiles/jo.jpeg"
-					github=""
-					linkedin=""
-					blurb=""
-				/> -->
+					image="profiles/leonard.jpg"
+					github="https://github.com/hmin697"
+					linkedin="#"
+					blurb="software engineering student, have interests in security"
+				/>
 
 				<ProfileCard
 					class="column"
@@ -103,7 +103,7 @@
 					image="profiles/angelo.jpg"
 					github="https://github.com/atan958"
 					linkedin="https://www.linkedin.com/in/angelo-tangonan-3788b41bb/"
-					blurb="SWE Intern at Vista Entertainment Solutions"
+					blurb="Software Engineer-to-be, aspiring to better people's lives through software."
 				/>
 			</div>
 		</section>
