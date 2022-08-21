@@ -18,7 +18,7 @@ var Reddit = {
 
   // HTML for report button
   reportLinkHTML: function () {
-    return '<div class="reddit-actions"><div id="report"><div class="reddit-action report">Report</div></div>';
+    return '<div class="reddit-actions"><div class="reddit-action report">Report</div></div>';
   },
   
   //listener to scroll events
@@ -125,16 +125,44 @@ var Reddit = {
       });
   },
 
+  //Add a report Button under every post
   addReportButton:function(){
     var posts = document.querySelectorAll(this.linkSelector);
     posts.forEach((post) => {
         
         if(!(post.innerHTML.includes(this.reportLinkHTML()))){
           post.innerHTML += this.reportLinkHTML();
+           post
+         .querySelector(".reddit-action.report")
+         .addEventListener("click", (event) => {
+            event.stopPropagation()
+            console.log(post)
+            alert("reported!");
+            post.style.filter = "blur(5Px)";
+         });
        }
   
     });
   },
+
+  // calls removeLinkFromDOM to remove a specific post link from the DOM
+  removeLink: function (event) {
+    var button = event.currentTarget;
+    var post = button.parentNode.parentNode;
+    var link = post.getAttribute("id");
+
+    this.getDOMTitle(post);
+    this.getDOMLink(post);
+    try {
+      this.getDOMImageLink(post);
+    } catch (e) {
+      console.log("Not an image" + e);
+    }
+     //this.blurImage(post);
+      this.removeLinkFromDOM(link);
+  },
+
+
 
   // remove post from DOM (page)
   removeLinkFromDOM: function (_link) {

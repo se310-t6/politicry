@@ -11,14 +11,13 @@
   background-color: #4412c1;
   border: none;
   color: white;
-  padding: 20px;
+  padding: 5px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 10px;
   border-radius: 12px;
   margin: 4px 2px;
-  
 }
 
 .reddit-action.block {
