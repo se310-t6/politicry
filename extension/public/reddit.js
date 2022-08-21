@@ -5,94 +5,134 @@ var Reddit = {
   // CSS selector for the Reddit posts list
   listSelector: ".rpBJOHq2PR60pnwJlUyP0",
 
-  // HTML for hide button
-  hideLinkHTML: function () {
-    return '<div class="reddit-actions"><div class="reddit-action hide">Hide</div></div>';
-  },
+  //counter for checkForUpdate
+  counter: 0,
+  refreshFrequency: 100,
 
-  // HTML for dashboard
-  dashboardHTML: function () {
-    var h = '<div class="reddit-dashboard">';
-    h += '<div class="reddit-page-status">';
-    h +=
-      '<div class="reddit-status total_hidden"><span class="variable"></span>Total hidden</div>';
-    h += "</div>";
-    h += '<div class="reddit-controls">';
-    h += '<div class="reddit-control hide_links">Load Hide Buttons</div>';
-    h += '<div class="reddit-control unhide_links">Unhide all</div>';
-    h += "</div>";
-    h += "</div>";
-
-    return h;
-  },
-
-  // initalize UI
+  // initalize
   initialize: function () {
-    this.setupUI();
+      this.blurImage();
+      this.addReportButton();
+      this.checkForUpdate();
   },
 
-  // initalize all UI elements and onclick binding
-  setupUI: function () {
-    list = document.querySelector(this.listSelector);
-    list.innerHTML = this.dashboardHTML() + list.innerHTML;
+  // HTML for report button
+  reportLinkHTML: function () {
+    return '<div class="reddit-actions"><div id="report"><div class="reddit-action report">Report</div></div>';
+  },
+  
+  //listener to scroll events
+  //updates new visible posts to be filtered
+  checkForUpdate: function(){
+      document.addEventListener('scroll', (ev) => {
+      this.counter++;
+      if(this.counter == this.refreshFrequency){
+          this.counter = 0;
+          this.blurImage();
+          this.addReportButton();
+          console.log("updated");
+      }
+      });
+  },
 
-    document
-      .querySelector(".reddit-control.unhide_links")
-      .addEventListener("click", () => {
-        this.restoreDOM();
-        console.log("unhide all");
+
+
+  //check if any configured keywords are found in a post
+  //return true if found
+  async filterText (post,callBack) {
+      //temporary filter data
+      //these data must be stored in cookie
+      const blockedWordsData = [
+          "denr",
+          "nobody",
+          "taranaki",
+          "covid",
+          "isis",
+          "pizza"
+      ];
+
+      const title = this.getDOMTitle(post);
+      const description = this.getDOMDescription(post);
+      //image varible contain image url then contain result of ocr
+      let image = this.getDOMImageLink(post);
+
+      if(image != "n/a"){
+          image = await this.ocr(image);
+          image = image.toLowerCase();
+          //callback to wait ocr to be processed
+          callBack();
+      }
+
+      console.log(image);
+      //search if blockedwords are in the title
+      //true if found
+      for (i in blockedWordsData){
+          console.log("pass");
+          if(title.search(blockedWordsData[i]) != -1){
+            return true;
+          }else if (image.search(blockedWordsData[i]) != -1){
+            return true;
+          }else if (description.search(blockedWordsData[i]) != -1){
+            return true;
+          }
+      }
+      return false;
+  },
+
+  //extract text from image using tesseract
+  //returns text
+  async ocr (url) {
+
+      const { createWorker } = Tesseract;
+      const worker = createWorker ({
+      logger: m => console.log(m)
       });
 
-    document
-      .querySelector(".reddit-control.hide_links")
-      .addEventListener("click", () => {
-        this.setupPostUI();
-        console.log("all links hidden");
+      await worker.load();
+      await worker.loadLanguage('eng');
+      await worker.initialize('eng');
+      const { data: { text } } = await worker.recognize(url);
+      await worker.terminate();
+      return text;
+
+  },
+
+  //blurs the image in a post when blocked keyword is found
+  blurImage: function () {
+      var posts = document.querySelectorAll(this.linkSelector);
+
+      posts.forEach((post) => {
+      var link = post.getAttribute("id");
+      //link(id) of promotions in reddit exceed 50 characters
+      const linkMaxLength = 50;
+      if(link.length < linkMaxLength){
+
+          //checking if current post contains blocked keyword
+          //promise has to be processed to retrieve result data
+          const promise = this.filterText(post,function () {console.log("ocr done");})
+          .then(function(isFound){
+          //isFound = result of promise
+          //true if found
+          console.log(isFound); // debug
+          if(isFound) {
+              console.log(document.getElementsByClassName(link));
+              document.getElementById(link).style.filter = "blur(5Px)";
+              //removes link if no images found.
+              //this.removeLinkFromDOM(link);
+          }
+          });
+      }
       });
   },
 
-  setupPostUI: function () {
-    // adds hide button to each Reddit post
-    posts = document.querySelectorAll(this.linkSelector);
-    console.log(posts);
-    posts.forEach((post) => {
-      post.innerHTML += this.hideLinkHTML();
-      post
-        .querySelector(".reddit-action.hide")
-        .addEventListener("click", (event) => {
-          this.removeLink(event);
-        });
-    });
-    console.log("setup post UI");
-  },
-
-  // calls removeLinkFromDOM to remove a specific post link from the DOM
-  removeLink: function (event) {
-    var button = event.currentTarget;
-    var post = button.parentNode.parentNode;
-    var link = post.getAttribute("id");
-
-    this.getDOMTitle(post);
-    this.getDOMLink(post);
-    try {
-      this.getDOMImageLink(post);
-    } catch (e) {
-      console.log("Not an image" + e);
-    }
-    // this.blurImage(post);
-    this.removeLinkFromDOM(link);
-  },
-
-  // called removeLinkFromDOM to remove all loaded posts on the page
-  // can use this method to call our image processing on all posts automatically
-  removeLinkAll: function () {
+  addReportButton:function(){
     var posts = document.querySelectorAll(this.linkSelector);
-    // console.log("Found " + posts.length + " Visible posts");
-    // console.log(posts);
     posts.forEach((post) => {
-      post.style.display = "none";
-      post.querySelector(".reddit-action").style.display = "none";
-
+        
+        if(!(post.innerHTML.includes(this.reportLinkHTML()))){
+          post.innerHTML += this.reportLinkHTML();
+       }
+  
     });
   },
 
@@ -100,17 +140,6 @@ var Reddit = {
   removeLinkFromDOM: function (_link) {
     document.querySelector("[id=" + _link + "]").style.display = "none";
     document.querySelector("[id=" + _link + "] .reddit-action").style.display = "none";
-  },
-
-  // restore all hidden posts
-  restoreDOM: function () {
-    var posts = document.querySelectorAll(this.linkSelector);
-    // console.log("Found " + posts.length + " Visible posts");
-    // console.log(posts);
-    posts.forEach((post) => {
-      post.style.display = "block";
-      post.querySelector(".reddit-action").style.display = "block";
-    });
   },
 
   // retrieve the post link
@@ -123,21 +152,40 @@ var Reddit = {
   // retrive the posts iamge link
   getDOMImageLink: function (_post) {
     classSelector = "._2_tDEnGMLxpM6uOa2kaDB3";
-    var url = _post.querySelector(classSelector).getAttribute("src");
-    console.log("image url: " + url); // DEBUG
+    var url = _post.querySelector(classSelector);
+    if(url != null){
+      url = url.getAttribute("src");
+      console.log("image url: " + url); // DEBUG
+      return url;
+    }else{
+      return "n/a";
+    }
   },
 
   getDOMTitle: function (_post) {
     classSelector = "._eYtD2XCVieq6emjKBH3m";
-    var title = _post.querySelector(classSelector).textContent;
-    console.log("post title: " + title); // DEBUG
+    var title = _post.querySelector(classSelector);
+    if(title != null){
+      title = title.textContent.toLowerCase();
+      console.log("post title: " + title); // DEBUG
+      return title;
+    }else{
+      return "n/a";
+    }
   },
 
-  blurImage: function (_post) {
-    classSelector = "._2_tDEnGMLxpM6uOa2kaDB3";
-    var image = _post.querySelector(classSelector);
-    image.style.filter = "blur(5px)";
-  },
+  //retrieve the posts description
+  getDOMDescription: function (_post) {
+      descriptionSelector = "._292iotee39Lmt0MkQZ2hPV";
+      var description = _post.querySelector(descriptionSelector);
+      if(description != null){
+        description = description.textContent.toLowerCase();
+        console.log("post description: " + description); // DEBUG
+        return description;
+      }else{
+        return "n/a";
+      }
+  }
 };
 
-Reddit.initialize();
+Reddit.initialize()
