@@ -20,7 +20,7 @@ var Reddit = {
   reportLinkHTML: function () {
     return '<div class="reddit-actions"><div class="reddit-action report">Report</div></div>';
   },
-  
+
   //listener to scroll events
   //updates new visible posts to be filtered
   checkForUpdate: function(){
@@ -129,7 +129,7 @@ var Reddit = {
   addReportButton:function(){
     var posts = document.querySelectorAll(this.linkSelector);
     posts.forEach((post) => {
-        
+
         if(!(post.innerHTML.includes(this.reportLinkHTML()))){
           post.innerHTML += this.reportLinkHTML();
            post
@@ -141,7 +141,7 @@ var Reddit = {
             post.style.filter = "blur(5Px)";
          });
        }
-  
+
     });
   },
 
