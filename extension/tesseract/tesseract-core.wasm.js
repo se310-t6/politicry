@@ -18,4 +18,3 @@ if (typeof exports === 'object' && typeof module === 'object')
       define([], function() { return TesseractCoreWASM; });
     else if (typeof exports === 'object')
       exports["TesseractCoreWASM"] = TesseractCoreWASM;
-    

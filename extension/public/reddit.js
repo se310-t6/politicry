@@ -4,7 +4,7 @@ var Reddit = {
 
   // CSS selector for the Reddit posts list
   listSelector: ".rpBJOHq2PR60pnwJlUyP0",
-  
+
   //counter for checkForUpdate
   counter: 0,
   refreshFrequency: 100,
@@ -28,7 +28,7 @@ var Reddit = {
       });
   },
 
-  
+
 
   //check if any configured keywords are found in a post
   //return true if found
@@ -75,12 +75,12 @@ var Reddit = {
   //extract text from image using tesseract
   //returns text
   async ocr (url) {
-      
+
       const { createWorker } = Tesseract;
       const worker = createWorker ({
       logger: m => console.log(m)
       });
-      
+
       await worker.load();
       await worker.loadLanguage('eng');
       await worker.initialize('eng');

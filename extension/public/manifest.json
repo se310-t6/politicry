@@ -8,7 +8,8 @@
     "content_scripts": [
         {
             "js": [
-                "tesseract.min.js","reddit.js"
+                "tesseract.min.js",
+                "reddit.js"
             ],
             "matches": [
                 "https://www.reddit.com/*",
@@ -23,7 +24,5 @@
         "activeTab",
         "scripting"
     ],
-
     "version": "1.0"
-
 }
