@@ -3,15 +3,12 @@
         "default_popup": "popup.html"
     },
     "background": {
-        "service_worker": "background.js"
+        
     },
     "content_scripts": [
         {
-            "css": [
-                "reddit.css"
-            ],
             "js": [
-                "reddit.js"
+                "tesseract.min.js","reddit.js"
             ],
             "matches": [
                 "https://www.reddit.com/*",
@@ -26,5 +23,7 @@
         "activeTab",
         "scripting"
     ],
+
     "version": "1.0"
+
 }
