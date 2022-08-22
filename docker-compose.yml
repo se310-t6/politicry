@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.3"
 services:
   traefik:
     container_name: traefik
@@ -7,6 +7,7 @@ services:
     depends_on:
       - politicry-api
       - politicry-db
+      - politicry-frontend
 
     command:
       - --api.insecure=true
@@ -37,10 +38,27 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik-dynamic.yml:/etc/traefik/traefik-dynamic.yml
 
+  politicry-frontend:
+    container_name: politicry-frontend
+    build: ./website
+    restart: always
+    depends_on:
+      - politicry-api
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+      - BASE_URL=http://api:3000/
+      - BROWSER_BASE_URL=https://${DOMAIN}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.politicry-frontend.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.politicry-frontend.entrypoints=websecure
+      - traefik.http.routers.politicry-frontend.middlewares=security-headers@file
+
   politicry-api:
     container_name: politicry-api
     restart: unless-stopped
-    image: ghcr.io/politicry/politicry:latest
+    build: ./backend
 
     depends_on:
       - politicry-db
@@ -48,15 +66,17 @@ services:
     environment:
       - PORT=3000
       - HOST=0.0.0.0
-      - DATABASE_URL=postgres://politicry:${DB_PASSWORD}@politicry-db:5432/politicry
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DATABASE_URL=postgresql://politicry:${DB_PASSWORD}@politicry-db:5432/politicry
       - BROWSER_BASE_URL=https://${DOMAIN}
       - SECRET_KEY=${DB_PASSWORD}
 
     labels:
       - traefik.enable=true
-      - traefik.http.routers.politicry-api.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.politicry-api.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)
       - traefik.http.routers.politicry-api.entrypoints=websecure
       - traefik.http.routers.politicry-api.middlewares=security-headers@file, api-headers@file
+      - traefik.http.services.politicry-api.loadBalancer.server.port=3000 # required because build can take a while on start
 
   # For production use, it's better to have a separate database container running postgres, instead of sqlite
   politicry-db:
@@ -85,3 +105,4 @@ services:
       - traefik
       - politicry-api
       - politicry-db
+      - politicry-frontend

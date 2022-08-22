@@ -1,0 +1,23 @@
+{
+    "dependencies": {
+        "@nuxtjs/axios": "^5.13.6",
+        "core-js": "^3.15.1",
+        "nuxt": "^2.15.7",
+        "nuxt-buefy": "^0.4.8",
+        "nuxt-lazy-load": "^1.2.7",
+        "sass": "^1.42.1",
+        "sass-loader": "10"
+    },
+    "devDependencies": {
+        "fibers": "^5.0.0"
+    },
+    "name": "politicry-frontend",
+    "private": true,
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt",
+        "generate": "nuxt generate",
+        "start": "nuxt start"
+    },
+    "version": "1.0.0"
+}

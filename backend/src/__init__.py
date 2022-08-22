@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 # from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager
 
 db = SQLAlchemy()
 limiter = Limiter(
@@ -73,7 +73,6 @@ def create_app(config_class=Config):
     limiter.limit(
         "30/minute",
         error_message="You're doing that too much",
-        key_func=lambda: current_user.username,
     )(blueprint_detection)
     limiter.limit(
         "60/minute",

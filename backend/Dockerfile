@@ -1,9 +1,9 @@
-ARG IMAGE=python:3
+ARG IMAGE=python:slim-bullseye
 FROM $IMAGE
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
-RUN apt-get install -y postgresql
+RUN apt-get install -y postgresql gcc libpq-dev
 
 WORKDIR /usr/src/app
 
@@ -16,6 +16,6 @@ COPY . .
 ENV PORT=3000
 ENV HOST=localhost
 
-HEALTHCHECK CMD curl --fail "http://${HOST}:${PORT}/healthcheck" || exit 1
+# HEALTHCHECK CMD curl --fail "http://${HOST}:${PORT}/healthcheck" || exit 1
 
 CMD ["./scripts/start.sh"]
