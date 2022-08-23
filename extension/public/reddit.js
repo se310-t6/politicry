@@ -141,7 +141,6 @@ var Reddit = {
     }else{ //image link was empty, hence the post does not contain image
       return "";
     }
-    
   },
 
   getDOMTitle: function (_post) {
@@ -167,7 +166,6 @@ var Reddit = {
       }else{ //description was empty, returns empty string value
         return "";
       }
-      
   }
 };
 
