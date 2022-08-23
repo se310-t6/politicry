@@ -7,10 +7,8 @@
     },
     "content_scripts": [
         {
-            "css": [
-                "reddit.css"
-            ],
             "js": [
+                "tesseract.min.js",
                 "reddit.js"
             ],
             "matches": [
