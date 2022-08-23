@@ -16,9 +16,8 @@ var Reddit = {
       this.checkForUpdate();
   },
 
-  // HTML for report button
   reportLinkHTML: function () {
-    return '<div class="reddit-actions"><div class="reddit-action report">Report</div></div>';
+    return '<div class="reddit-actions"><div class="reddit-action report"><div id ="labelId">Report</div></div></div>';
   },
 
   //listener to scroll events
@@ -132,13 +131,14 @@ var Reddit = {
 
         if(!(post.innerHTML.includes(this.reportLinkHTML()))){
           post.innerHTML += this.reportLinkHTML();
+          console.log("Button Added");
            post
          .querySelector(".reddit-action.report")
          .addEventListener("click", (event) => {
-            event.stopPropagation()
-            console.log(post)
-            alert("reported!");
+            event.stopPropagation();
+            console.log("Report created");
             post.style.filter = "blur(5Px)";
+            alert("reported!");
          });
        }
 
