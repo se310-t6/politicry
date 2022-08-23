@@ -145,25 +145,6 @@ var Reddit = {
     });
   },
 
-  // calls removeLinkFromDOM to remove a specific post link from the DOM
-  removeLink: function (event) {
-    var button = event.currentTarget;
-    var post = button.parentNode.parentNode;
-    var link = post.getAttribute("id");
-
-    this.getDOMTitle(post);
-    this.getDOMLink(post);
-    try {
-      this.getDOMImageLink(post);
-    } catch (e) {
-      console.log("Not an image" + e);
-    }
-     //this.blurImage(post);
-      this.removeLinkFromDOM(link);
-  },
-
-
-
   // remove post from DOM (page)
   removeLinkFromDOM: function (_link) {
     document.querySelector("[id=" + _link + "]").style.display = "none";
