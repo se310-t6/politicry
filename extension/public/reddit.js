@@ -23,7 +23,7 @@ var Reddit = {
       if(this.counter == this.refreshFrequency){
           this.counter = 0;
           this.blurImage();
-          console.log("updated");
+          //console.log("updated"); //debug
       }
       });
   },
@@ -36,40 +36,43 @@ var Reddit = {
       //temporary filter data
       //these data must be stored in cookie
       const blockedWordsData = [
-          "denr",
-          "nobody",
-          "taranaki",
-          "covid",
-          "isis",
-          "pizza"
-      ];
+        "trump",
+        "terrorist",
+        "communism",
+        "racism",
+        "isis",
+        "pizza"
+    ];
 
       const title = this.getDOMTitle(post);
       const description = this.getDOMDescription(post);
       //image varible contain image url then contain result of ocr
+      //getDOMImageLink gets an url of the image if there is one
       let image = this.getDOMImageLink(post);
 
-      if(image != "n/a"){
-          image = await this.ocr(image);
-          image = image.toLowerCase();
-          //callback to wait ocr to be processed
-          callBack();
+      //check if the imagelink was blank or not.
+      if(image != ""){
+        //asynchronously computing ocr, therefore await is needed
+        image = await this.ocr(image);
+        image = image.toLowerCase();
+        //callback to wait ocr to be processed
+        callBack();
       }
 
-      console.log(image);
       //search if blockedwords are in the title
       //true if found
+      var isInclude = false;
       for (i in blockedWordsData){
-          console.log("pass");
-          if(title.search(blockedWordsData[i]) != -1){
-            return true;
-          }else if (image.search(blockedWordsData[i]) != -1){
-            return true;
-          }else if (description.search(blockedWordsData[i]) != -1){
-            return true;
+
+          if(title.includes(blockedWordsData[i])){
+            isInclude = true;
+          }else if (image.includes(blockedWordsData[i])){
+            isInclude = true;
+          }else if (description.includes(blockedWordsData[i])){
+            isInclude = true;
           }
       }
-      return false;
+      return isInclude;
   },
 
   //extract text from image using tesseract
@@ -77,9 +80,7 @@ var Reddit = {
   async ocr (url) {
 
       const { createWorker } = Tesseract;
-      const worker = createWorker ({
-      logger: m => console.log(m)
-      });
+      const worker = createWorker();
 
       await worker.load();
       await worker.loadLanguage('eng');
@@ -102,13 +103,11 @@ var Reddit = {
 
           //checking if current post contains blocked keyword
           //promise has to be processed to retrieve result data
-          const promise = this.filterText(post,function () {console.log("ocr done");})
+          const promise = this.filterText(post,function () {/*console.log("ocr done"); //debug*/})
           .then(function(isFound){
           //isFound = result of promise
           //true if found
-          console.log(isFound); // debug
           if(isFound) {
-              console.log(document.getElementsByClassName(link));
               document.getElementById(link).style.filter = "blur(5Px)";
               //removes link if no images found.
               //this.removeLinkFromDOM(link);
@@ -128,31 +127,32 @@ var Reddit = {
   getDOMLink: function (_post) {
     classSelector = ".SQnoC3ObvgnGjWt90zD9Z";
     var url = _post.querySelector(classSelector).getAttribute("href");
-    console.log("post url: " + "www.reddit.com" + url); // DEBUG
+    //console.log("post url: " + "www.reddit.com" + url); // DEBUG
   },
 
   // retrive the posts iamge link
   getDOMImageLink: function (_post) {
     classSelector = "._2_tDEnGMLxpM6uOa2kaDB3";
     var url = _post.querySelector(classSelector);
-    if(url != null){
+    if(url != undefined){
       url = url.getAttribute("src");
-      console.log("image url: " + url); // DEBUG
+      //console.log("image url: " + url); // DEBUG
       return url;
-    }else{
-      return "n/a";
+    }else{ //image link was empty, hence the post does not contain image
+      return "";
     }
+    
   },
 
   getDOMTitle: function (_post) {
     classSelector = "._eYtD2XCVieq6emjKBH3m";
     var title = _post.querySelector(classSelector);
-    if(title != null){
+    if(title != undefined){
       title = title.textContent.toLowerCase();
-      console.log("post title: " + title); // DEBUG
+      //console.log("post title: " + title); // DEBUG
       return title;
-    }else{
-      return "n/a";
+    }else{ //title was empty, returns empty string value
+      return "";
     }
   },
 
@@ -160,13 +160,14 @@ var Reddit = {
   getDOMDescription: function (_post) {
       descriptionSelector = "._292iotee39Lmt0MkQZ2hPV";
       var description = _post.querySelector(descriptionSelector);
-      if(description != null){
+      if(description != undefined){
         description = description.textContent.toLowerCase();
-        console.log("post description: " + description); // DEBUG
+        //console.log("post description: " + description); // DEBUG
         return description;
-      }else{
-        return "n/a";
+      }else{ //description was empty, returns empty string value
+        return "";
       }
+      
   }
 };
 
