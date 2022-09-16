@@ -60,7 +60,7 @@
 			<div class="spacer-desktop" />
 			<div class="spacer-desktop" />
 			<span id="team"></span>
-			<div class="columns">
+			<div class="columns profileColumns">
 				<ProfileCard
 					class="column"
 					name="Josiah Bull"
@@ -104,6 +104,42 @@
 					github="https://github.com/atan958"
 					linkedin="https://www.linkedin.com/in/angelo-tangonan-3788b41bb/"
 					blurb="Software Engineer-to-be, aspiring to better people's lives through software."
+				/>
+
+				<ProfileCard
+					class="column"
+					name="Destiny Li"
+					image="profiles/destiny.jpg"
+					github="https://github.com/Destiny-02"
+					linkedin="https://www.linkedin.com/in/destinylinz/"
+					blurb="Penultimate-year software engineering student. Enjoys Android app-dev and front-end things. "
+				/>
+
+				<ProfileCard
+					class="column"
+					name="Kiran Chung"
+					image="profiles/kiran.jpg"
+					github="https://github.com/k1dubv1"
+					linkedin="https://nz.linkedin.com/in/kiran-chung-a55052199"
+					blurb="An ambitious developer, using software to empower the world."
+				/>
+
+				<ProfileCard
+					class="column"
+					name="Kyle Hensel"
+					image="profiles/kyle.jpg"
+					github="https://github.com/k-yle"
+					linkedin="https://www.linkedin.com/in/kyle-hensel-800634237"
+					blurb="Full Stack software engineer with an interest in automation. "
+				/>
+
+				<ProfileCard
+					class="column"
+					name="Zihan Zhong"
+					image="profiles/zihan.JPG"
+					github="https://github.com/Kanelmis"
+					linkedin="https://www.linkedin.com/in/zihan-zhong-124457250"
+					blurb="A front-end web developer, passionate about machine learning applications to the psychology area. "
 				/>
 			</div>
 		</section>
@@ -164,6 +200,11 @@ export default {
 
 .desktop-only {
 	display: none;
+}
+
+.profileColumns {
+  width: 100%;
+  overflow-x: scroll;
 }
 
 @media only screen and (min-width: 1024px) {

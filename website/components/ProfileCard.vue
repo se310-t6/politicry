@@ -1,5 +1,5 @@
 <template>
-    <div class="column">
+    <div class="column is-half-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <div class="card">
         <header class="card-header">
             <div class="card-header-title is-centered is-size-4 has-text-grey">{{name}}</div>
@@ -11,7 +11,7 @@
         </div>
         <footer class="card-footer">
             <div class="card-footer-item">
-            <div class="content has-text-centered">
+            <div class="content has-text-centered" style="height: 5em;">
                 {{blurb}}
             </div>
             </div>
