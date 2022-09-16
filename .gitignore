@@ -3,3 +3,4 @@ redoc-static.html
 .dev.env
 letsencrypt/*
 !letsencrypt/.gitkeep
+politicry-pgdata
