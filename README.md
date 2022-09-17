@@ -7,8 +7,12 @@
 Politicry is a browser extension to filter political posts from your feed on popular social media sites such as Reddit. Currently, we only support the Chrome browser, but in the future hope to expand support to include other browsers, such as Firefox.
 
 ## Installation
-<!-- TODO -->
-TODO
+1. Build the extension as per the instructions below.
+2. Visit `chrome://extensions/` in your Chrome browser.
+3. Toggle Developer mode.
+4. Click on the "Load unpacked" button.
+5. Select the `politicy/extension/dist` folder.
+6. The Politicry extension card should show in your list of extensions.
 
 ## Prerequisites
 - Install yarn: `npm install --global yarn`
