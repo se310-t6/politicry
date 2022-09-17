@@ -10,10 +10,15 @@ Politicry is a browser extension to filter political posts from your feed on pop
 <!-- TODO -->
 TODO
 
+## Prerequisites
+- Install yarn: `npm install --global yarn`
+- Install [Docker](https://docs.docker.com/get-docker/). You may also need to install the WSL 2 Linux kernel if Docker Desktop prompts you to.
+- Open Docker Desktop
+- Clone this repository and open it in the terminal.
+
 ## Development
 **Run Backend:**
 ```bash
-cd backend
 docker-compose -f docker-compose.dev.yml up -d # start the backend
 
 ## other useful commands ##
@@ -21,20 +26,22 @@ docker-compose -f docker-compose.dev.yml up -d # start the backend
 docker-compose -f docker-compose.dev.yml logs -f # view logs of backend
 docker-compose -f docker-compose.dev.yml down # stop the backend
 ```
+If this does not work, please try the top solution [here](https://stackoverflow.com/questions/41117421/ps1-cannot-be-loaded-because-running-scripts-is-disabled-on-this-system)
 
 **Build Extension:**
 ```bash
 cd extension
 yarn # install modules
-ENVIRONMENT=dev yarn build # build the extension, this will export to extension/dist
+
+# build the extension, this will export to extension/dist
+yarn build
+ENVIRONMENT=dev yarn build # for Linux
 ```
 
 ## Deployment
 
 ```bash
-cd backend
 cp .example.env .env
-nano .env # update as required
 
 docker-compose -f docker-compose.yml --env-file .env up -d
 ```
