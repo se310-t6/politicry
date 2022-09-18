@@ -24,10 +24,28 @@ const globalSwitchHandler = () => {
         toggleList.style.pointerEvents = "auto";
         toggleList.style.opacity = "100%";
     }
+
+    chrome.storage.sync.set({ globalToggled: globalSwitch.checked });
 }
 
-globalSwitch.onclick = globalSwitchHandler;
+const redditSwitchHandler = () => {
+    chrome.storage.sync.set({ redditToggled: redditSwitch.checked });
+}
 
+// onchange instead of onclick as the state may change programatically
+globalSwitch.onchange = globalSwitchHandler;
+redditSwitch.onchange = redditSwitchHandler;
+
+// Set initial state of toggles
+chrome.storage.sync.get(['redditToggled'], function(data) {
+    redditSwitch.checked = data.redditToggled;
+    redditSwitchHandler();
+});
+
+chrome.storage.sync.get(['globalToggled'], function(data) {
+    globalSwitch.checked = data.globalToggled;
+    globalSwitchHandler();
+});
 
 /********** Keywords **********/
 

@@ -34,7 +34,8 @@
     },
     "permissions": [
         "activeTab",
-        "scripting"
+        "scripting",
+        "storage"
     ],
     "version": "1.0"
 }
