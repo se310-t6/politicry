@@ -8,6 +8,10 @@ const twitterSwitch = document.getElementById("twitterSwitch");
 const addOtherSites = document.getElementById("addOtherSites");
 const globalSwitch = document.getElementById("globalSwitch");
 
+// Politicry is not yet available for Imgur and Twitter
+imgurSwitch.disabled = true
+twitterSwitch.disabled = true
+
 const globalSwitchHandler = () => {
     if(globalSwitch.checked == true) {
         redditSwitch.checked = false;
