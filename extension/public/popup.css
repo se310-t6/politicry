@@ -223,6 +223,8 @@ header {
 
     width: 148px;
 
+    font-size: 16px;
+
     display:flex;
     flex-direction: column;
     justify-content: center;
@@ -282,6 +284,47 @@ header {
     background-color: #47a8f8;
 }
 
+.edit-tags {
+    position: absolute;
+    top: 100px;
+    left: 22px;
+
+    width: 148px;
+    height: 160px;
+
+    resize: none;
+    visibility: hidden;
+}
+
+.edit-tags-actions {
+    visibility: hidden;
+}
+
+.tags-action-btn {
+    position: absolute;
+    bottom: 40px;
+
+    width: 60px;
+    height: 24px;
+
+    color: white;
+    font-weight: 200;
+
+    border: none;
+    border-radius: 4px;
+
+    cursor: pointer;
+}
+
+#saveTagsBtn {
+    background-color: #2196F3;
+    left: 32px;
+}
+
+#cancelTagsBtn {
+    background-color: #999999;
+    right: 32px;
+}
 /*------- Footer -------*/
 
 footer {
