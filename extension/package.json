@@ -1,21 +1,31 @@
 {
-    "author": "SE310-T6",
-    "dependencies": {},
-    "description": "A tool to remove political posts from popular social media platforms.",
-    "devDependencies": {
-        "@types/chrome": "^0.0.193",
-        "copy-webpack-plugin": "^11.0.0",
-        "ts-loader": "^9.3.1",
-        "typescript": "^4.7.4",
-        "webpack": "^5.74.0",
-        "webpack-cli": "^4.10.0"
-    },
-    "license": "MIT",
-    "main": "index.js",
-    "name": "politicry",
-    "repository": "git@github.com:se310-t6/politicry.git",
-    "scripts": {
-        "build": "webpack --config webpack/webpack.config.js"
-    },
-    "version": "1.0.0"
+  "author": "SE310-T6",
+  "description": "A tool to remove political posts from popular social media platforms.",
+  "dependencies": {
+    "cypress": "^10.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.1",
+    "@cypress/code-coverage": "^3.10.0",
+    "@types/chrome": "^0.0.193",
+    "babel-plugin-istanbul": "^6.1.1",
+    "copy-webpack-plugin": "^11.0.0",
+    "nyc": "^15.1.0",
+    "parcel": "^2.7.0",
+    "start-server-and-test": "^1.14.0",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "name": "politicry",
+  "repository": "git@github.com:se310-t6/politicry.git",
+  "scripts": {
+    "test:ci": "start-server-and-test 'parcel public/popup.html' 1234 'cypress run && nyc report --reporter=lcov --reporter=text-summary --x'",
+    "test": "start-server-and-test 'parcel public/popup.html' 1234 'cypress open'",
+    "build": "webpack --config webpack/webpack.config.js"
+  },
+  "version": "1.0.0"
 }

@@ -35,10 +35,22 @@ jobs:
 
       - name: Run Tests
         run: |
+          cd extension
+          yarn
+          yarn test:ci
+
+      - name: Run Frontend Tests
+        run: |
+          cd website
+          yarn
+          yarn test
+
+      - name: Run Backend Tests
+        run: |
           cd backend
           python -m pytest -v
 
-      - name: Generate Coverage Report
+      - name: Generate Backend Coverage Report
         run: |
           cd backend
           coverage run --branch --context=ci --source src -m pytest
@@ -49,6 +61,6 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./backend/coverage.xml
+          files: ./backend/coverage.xml,./extension/coverage/clover.xml,./website/coverage/clover.xml
           fail_ci_if_error: true
           verbose: true
