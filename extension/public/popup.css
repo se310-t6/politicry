@@ -5,7 +5,7 @@
 
 body {
     width: 400px;
-    height: 600px;
+    height: 514px;
     outline: 1px solid black;
 
     display:flex;
@@ -84,10 +84,6 @@ header {
     height: 350px;
 }
 
-.content .bottom {
-    width: 100%;
-    height: 90px;
-}
 
 /*------- Top: Enabled Sites -------*/
 
@@ -329,27 +325,6 @@ header {
     background-color: #999999;
     right: 32px;
 }
-/*------- Bottom: Backend -------*/
-
-.backend {
-    position: absolute;
-    width: 338px;
-    height: 71px;
-    left: 10px;
-    top: 437px;
-
-    background: #FFFFFF;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
-
-    display:flex;
-    justify-content: space-between;
-    padding: 0 22px 0 22px;
-    align-items: center;
-
-    font-weight: 500;
-    font-size: 18px;
-}
-
 /*------- Footer -------*/
 
 footer {
@@ -440,60 +415,3 @@ footer img {
   .slider.round:before {
     border-radius: 50%;
   }
-
-  /*------- ToolTip -------*/
-
-  .tooltip {
-    position: relative;
-    display: inline-block;
-  }
-
-  .tooltip .tooltiptext {
-    width: 238px;
-    background-color: rgb(230, 230, 230);
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px 0 10px 12px;
-
-    /* Styling text */
-    font-weight: 400;
-    font-size: 14px;
-    color: rgb(0, 0, 0);
-    text-align: left;
-
-    /* Position the tooltip */
-    position: absolute;
-    left: -210px;
-    bottom: -112px;
-    opacity: 0;
-    transition: 0.4s ease;
-    pointer-events: none;
-
-  }
-
-  .tooltip:hover .tooltiptext {
-    opacity: 1;
-  }
-
-  .tooltip .tooltiptext:before{
-    content:'';
-    display:block;
-    width:0;
-    height:0;
-    position:absolute;
-
-    border-right: 8px solid transparent;
-    border-left: 8px solid transparent;
-    border-bottom:12px solid rgb(230, 230, 230);
-    top:-8px;
-
-    right: 12px;
-}
-
-.tooltip .tooltiptext ul {
-    padding-left: 20px;
-}
-
-.tooltip .tooltiptext ul li {
-    font-size: 14px;
-}
