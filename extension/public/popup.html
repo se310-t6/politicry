@@ -40,14 +40,14 @@
                         <img src="./images/icon-imgur-128.png"/>
                         <label class="switch">
                             <input type="checkbox" id="imgurSwitch">
-                            <span class="slider round"></span>
+                            <span class="slider round" title="Imgur is not yet supported"></span>
                         </label>
                     </div>
                     <div class="toggle-item">
                         <img src="./images/icon-twitter-128.png"/>
                         <label class="switch" >
                             <input type="checkbox" id="twitterSwitch">
-                            <span class="slider round"></span>
+                            <span class="slider round" title="Twitter is not yet supported"></span>
                         </label>
                     </div>
                     <form action="https://github.com/se310-t6/politicry/blob/main/CONTRIBUTING_GUIDELINES.md" method="get" target="_blank">
@@ -70,30 +70,21 @@
                 </div>
                 <div class="tag-list" id="tagList">
                 </div>
-                <button class="manage-tag-list-btn" id="manageTagListBtn"">Manage</button>
-            </div>
-        </div>
-        <div class="bottom">
-            <div class="backend">
-                <span>Connect to our backend</span>
-                <label class="switch tooltip">
-                    <input type="checkbox" checked>
-                    <span class="slider round"></span>
-                    <span class="tooltiptext">
-                        <h3>Why Connect?</h4>
-                        <ul>
-                            <li>shares your data</li>
-                            <li>reduces CPU load on your machine</li>
-                            <li>improves detection accuracy</li>
-                        </ul>
-                    </span>
-                </label>
+                <textarea class="edit-tags" id="editTagsTextArea"></textarea>
+                <button class="manage-tag-list-btn" id="manageTagListBtn">Manage</button>
+                <div class="edit-tags-actions" id="editTagsActions">
+                    <button class="tags-action-btn" id="saveTagsBtn">Save</button>
+                    <button class="tags-action-btn" id="cancelTagsBtn">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
     <footer>
-        <a href="https://github.com/se310-t6/politicry" target="_blank">
-            <span >Full Docs</span>
+        <a href="https://github.com/se310-t6/politicry/issues" target="_blank" style="margin: 16px">
+            <span> Report an issue</span>
+        </a>
+        <a href="https://github.com/se310-t6/politicry" style="margin: 16px">
+            <span>Full Docs</span>
             <img src="./images/external-link-128.png"/>
         </a>
     </footer>

@@ -8,6 +8,10 @@ const twitterSwitch = document.getElementById("twitterSwitch");
 const addOtherSites = document.getElementById("addOtherSites");
 const globalSwitch = document.getElementById("globalSwitch");
 
+// Politicry is not yet available for Imgur and Twitter
+imgurSwitch.disabled = true
+twitterSwitch.disabled = true
+
 const globalSwitchHandler = () => {
     if(globalSwitch.checked == true) {
         redditSwitch.checked = false;
@@ -20,63 +24,130 @@ const globalSwitchHandler = () => {
         toggleList.style.pointerEvents = "auto";
         toggleList.style.opacity = "100%";
     }
+
+    chrome.storage.sync.set({ globalToggled: globalSwitch.checked });
 }
 
-globalSwitch.onclick = globalSwitchHandler;
+const redditSwitchHandler = () => {
+    chrome.storage.sync.set({ redditToggled: redditSwitch.checked });
+}
 
+// onchange instead of onclick as the state may change programatically
+globalSwitch.onchange = globalSwitchHandler;
+redditSwitch.onchange = redditSwitchHandler;
+
+// Set initial state of toggles
+chrome.storage.sync.get(['redditToggled'], function(data) {
+    redditSwitch.checked = data.redditToggled;
+    redditSwitchHandler();
+});
+
+chrome.storage.sync.get(['globalToggled'], function(data) {
+    globalSwitch.checked = data.globalToggled;
+    globalSwitchHandler();
+});
 
 /********** Keywords **********/
-
-// keywords data
-const allowedWordsData = [
-    "ukraine",
-    "blm",
-    "gas prices"
-];
-
-const blockedWordsData = [
-    "trump",
-    "terrorist",
-    "communism",
-    "racism",
-    "isis",
-    "pizza"
-];
 
 // UI references
 const allowedBtn = document.getElementById("allowedBtn");
 const blockedBtn = document.getElementById("blockedBtn");
 const tagList = document.getElementById("tagList");
 const manageTagListBtn = document.getElementById("manageTagListBtn");
+const editTagsTextArea = document.getElementById("editTagsTextArea");
+const editTagsActions = document.getElementById("editTagsActions");
+const saveBtn = document.getElementById("saveTagsBtn");
+const cancelBtn = document.getElementById("cancelTagsBtn");
 
 // Helper:
 const renderAllowedWords = () => {
-    const max = 4;
-    const numTagItems = allowedWordsData.length > max ? max : allowedWordsData.length;
-    const numMoreResults=  allowedWordsData.length - numTagItems;
+    hideTagsEdit();
 
-    let tagItems = "";
-    const moreResults = numMoreResults > 0 ? `<div class=\"tag-results-item\">${numMoreResults} more</div>` : "";
+    chrome.storage.sync.get(['allowedWords'], function(data) {
+        const allowedWordsData = data.allowedWords;
+        if (allowedWordsData == undefined || allowedWordsData.length == 0) {
+            tagList.innerHTML = "No keywords set!"
+        }
 
-    for (let i=0; i<numTagItems; i++) {
-        tagItems += `<div class=\"tag-item\">${allowedWordsData[i]}</div>`;
-    }
-    tagList.innerHTML = tagItems + moreResults;
+        const max = 4;
+        const numTagItems = allowedWordsData.length > max ? max : allowedWordsData.length;
+        const numMoreResults=  allowedWordsData.length - numTagItems;
+
+        let tagItems = "";
+        const moreResults = numMoreResults > 0 ? `<div class=\"tag-results-item\">${numMoreResults} more</div>` : "";
+
+        for (let i=0; i<numTagItems; i++) {
+            tagItems += `<div class=\"tag-item\">${allowedWordsData[i]}</div>`;
+        }
+
+        tagList.innerHTML = tagItems + moreResults;
+    });
 }
 
 // Helper:
 const renderBlockedWords = () => {
-    const max = 4;
-    const numTagItems = blockedWordsData.length > max ? max : blockedWordsData.length
-    const numMoreResults=  blockedWordsData.length - numTagItems;
+    hideTagsEdit();
+    chrome.storage.sync.get(['blockedWords'], function(data) {
+        const blockedWordsData = data.blockedWords;
+        if (blockedWordsData == undefined || blockedWordsData.length == 0) {
+            tagList.innerHTML = "No keywords set!"
+        }
 
-    let tagItems = "";
-    const moreResults = numMoreResults > 0 ? `<div class=\"tag-results-item\">${numMoreResults} more</div>` : "";
+        const max = 4;
+        const numTagItems = blockedWordsData.length > max ? max : blockedWordsData.length
+        const numMoreResults=  blockedWordsData.length - numTagItems;
 
-    for (let i=0; i<numTagItems; i++) {
-        tagItems += `<div class=\"tag-item\">${blockedWordsData[i]}</div>`;
+        let tagItems = "";
+        const moreResults = numMoreResults > 0 ? `<div class=\"tag-results-item\">${numMoreResults} more</div>` : "";
+
+        for (let i=0; i<numTagItems; i++) {
+            tagItems += `<div class=\"tag-item\">${blockedWordsData[i]}</div>`;
+        }
+
+        tagList.innerHTML = tagItems + moreResults;
+    });
+}
+
+// Helper:
+const renderTagsEdit = () => {
+    manageTagListBtn.style.visibility = 'hidden';
+    editTagsActions.style.visibility = 'visible';
+    editTagsTextArea.style.visibility = 'visible';
+
+    if (manageTagListBtn.innerHTML == "Edit Allowed") {
+        chrome.storage.sync.get(['allowedWords'], function(data) {
+            editTagsTextArea.value = arrayToCsv(data.allowedWords);
+        });
+    } else {
+        chrome.storage.sync.get(['blockedWords'], function(data) {
+            editTagsTextArea.value = arrayToCsv(data.blockedWords);
+        });
     }
-    tagList.innerHTML = tagItems + moreResults;
+}
+
+// Helper:
+const hideTagsEdit = () => {
+    manageTagListBtn.style.visibility = 'visible';
+    editTagsActions.style.visibility = 'hidden';
+    editTagsTextArea.style.visibility = 'hidden';
+}
+
+// Helper:
+// Array --> Comma Separated Values
+// Converts array of strings to a single string where each value is separated by a comma
+const arrayToCsv = (array) => {
+    let csv = ""
+
+    for (const word of array) {
+        csv += word + ",";
+    }
+
+    // Remove last comma
+    if (array.length > 0) {
+        csv = csv.substring(0, csv.length - 1);
+    }
+
+    return csv;
 }
 
 // Method:
@@ -95,8 +166,40 @@ const blockedBtnHandler = () => {
     renderBlockedWords();
 }
 
+// Method:
+const manageTagListBtnHandler = () => {
+    renderTagsEdit();
+}
+
+// Method:
+const saveBtnHandler = () => {
+    // Split the text by commas
+    // If the text is an empty string, return an empty array (rather than an array with an empty string value)
+    const newWordList = editTagsTextArea.value == "" ? [] : editTagsTextArea.value.split(',').map(function (word) {
+        return word.trim();
+    })
+
+    if (manageTagListBtn.innerHTML == "Edit Allowed") {
+        chrome.storage.sync.set({ allowedWords: newWordList });
+        renderAllowedWords();
+    } else {
+        chrome.storage.sync.set({ blockedWords: newWordList });
+        renderBlockedWords();
+    }
+
+    hideTagsEdit();
+}
+
+// Method:
+const cancelBtnHandler = () => {
+    hideTagsEdit();
+}
+
 // assign buttons their respective functions
 allowedBtn.onclick = allowedBtnHandler;
 blockedBtn.onclick = blockedBtnHandler;
+manageTagListBtn.onclick = manageTagListBtnHandler;
+saveBtn.onclick = saveBtnHandler;
+cancelBtn.onclick = cancelBtnHandler;
 
 allowedBtnHandler();

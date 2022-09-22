@@ -7,13 +7,22 @@
 Politicry is a browser extension to filter political posts from your feed on popular social media sites such as Reddit. Currently, we only support the Chrome browser, but in the future hope to expand support to include other browsers, such as Firefox.
 
 ## Installation
-<!-- TODO -->
-TODO
+1. Build the extension as per the instructions below.
+2. Visit `chrome://extensions/` in your Chrome browser.
+3. Toggle Developer mode.
+4. Click on the "Load unpacked" button.
+5. Select the `politicy/extension/dist` folder.
+6. The Politicry extension card should show in your list of extensions.
+
+## Prerequisites
+- Install yarn: `npm install --global yarn`
+- Install [Docker](https://docs.docker.com/get-docker/). You may also need to install the WSL 2 Linux kernel if Docker Desktop prompts you to.
+- Open Docker Desktop
+- Clone this repository and open it in the terminal.
 
 ## Development
 **Run Backend:**
 ```bash
-cd backend
 docker-compose -f docker-compose.dev.yml up -d # start the backend
 
 ## other useful commands ##
@@ -21,20 +30,37 @@ docker-compose -f docker-compose.dev.yml up -d # start the backend
 docker-compose -f docker-compose.dev.yml logs -f # view logs of backend
 docker-compose -f docker-compose.dev.yml down # stop the backend
 ```
+If this does not work, please try the top solution [here](https://stackoverflow.com/questions/41117421/ps1-cannot-be-loaded-because-running-scripts-is-disabled-on-this-system)
 
 **Build Extension:**
 ```bash
 cd extension
 yarn # install modules
-ENVIRONMENT=dev yarn build # build the extension, this will export to extension/dist
+
+# build the extension, this will export to extension/dist
+yarn build
+ENVIRONMENT=dev yarn build # for Linux
+```
+
+**Run Tests for Extension**
+```bash
+cd extension
+yarn test # (or "npm test")
+
+# to collect code coverage, and run all tests immediately, use this command instead:
+yarn test:ci
+```
+
+**Run Tests for Website**
+```bash
+cd website
+yarn test # (or "npm test")
 ```
 
 ## Deployment
 
 ```bash
-cd backend
 cp .example.env .env
-nano .env # update as required
 
 docker-compose -f docker-compose.yml --env-file .env up -d
 ```
