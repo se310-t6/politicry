@@ -1,0 +1,4 @@
+{
+  // this is a configuration file for the code coverage tool
+  "plugins": ["istanbul"]
+}

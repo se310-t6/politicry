@@ -42,6 +42,21 @@ yarn build
 ENVIRONMENT=dev yarn build # for Linux
 ```
 
+**Run Tests for Extension**
+```bash
+cd extension
+yarn test # (or "npm test")
+
+# to collect code coverage, and run all tests immediately, use this command instead:
+yarn test:ci
+```
+
+**Run Tests for Website**
+```bash
+cd website
+yarn test # (or "npm test")
+```
+
 ## Deployment
 
 ```bash

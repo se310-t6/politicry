@@ -4,3 +4,12 @@ redoc-static.html
 letsencrypt/*
 !letsencrypt/.gitkeep
 politicry-pgdata
+coverage
+node_modules
+.parcel-cache
+extension/dist
+**/package-lock.json
+extension/public/tesseract.*
+extension/tesseract/*
+*.log
+.nyc_output
