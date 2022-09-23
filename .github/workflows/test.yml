@@ -34,7 +34,7 @@ jobs:
           FLASK_APP: app.py
 
       - name: Run Linter & Code Formatter
-        continue-on-error: yes
+        continue-on-error: true
         run: |
           yarn lint
 
