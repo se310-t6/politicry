@@ -52,10 +52,21 @@ yarn test:ci
 ```
 
 **Run Tests for Website**
+
 ```bash
 cd website
 yarn test # (or "npm test")
 ```
+
+**Run Code formatter and lint tool**
+
+```bash
+# cd into the root directory of this repository
+yarn # first time only
+yarn lint
+```
+
+Running this script will fix any formatting issues and report issues that could not be fixed.
 
 ## Deployment
 

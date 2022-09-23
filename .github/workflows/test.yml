@@ -33,7 +33,12 @@ jobs:
         env:
           FLASK_APP: app.py
 
-      - name: Run Tests
+      - name: Run Linter & Code Formatter
+        continue-on-error: yes
+        run: |
+          yarn lint
+
+      - name: Run Extension Tests
         run: |
           cd extension
           yarn
