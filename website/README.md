@@ -1,9 +1,11 @@
 # Front End
+
 This is the front-facing website for the Politicry application. It's a Nuxt.js application and can be statically built or run with server-side rendering (SSR).
 
 ## Build Setup
 
 **Development**
+
 ```bash
 yarn dev
 ```

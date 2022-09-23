@@ -1,15 +1,13 @@
 {
-    "compilerOptions": {
-        "esModuleInterop": true,
-        "module": "commonjs",
-        "noEmitOnError": true,
-        "outDir": "dist/js",
-        "rootDir": "src",
-        "sourceMap": true,
-        "strict": true,
-        "target": "es6",
-        "typeRoots": [
-            "node_modules/@types"
-        ]
-    }
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "outDir": "dist/js",
+    "rootDir": "src",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es6",
+    "typeRoots": ["node_modules/@types"]
+  }
 }

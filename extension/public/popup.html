@@ -1,89 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="popup.css"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@100;200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="popup.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="logo">
-            <a href="https://github.com/se310-t6/politicry">
-                <img src="./images/titled-logo-536x144.png"/>
-            </a>
-        </div>
-        <div class="version">
-            <span>Version 1.0.0</span>
-            <img src="./images/info-128.png" id="versionInfoBtn"/>
-        </div>
+      <div class="logo">
+        <a href="https://github.com/se310-t6/politicry">
+          <img src="./images/titled-logo-536x144.png" />
+        </a>
+      </div>
+      <div class="version">
+        <span>Version 1.0.0</span>
+        <img src="./images/info-128.png" id="versionInfoBtn" />
+      </div>
     </header>
     <div class="content">
-        <div class="top">
-            <div class="sites">
-                <h3>Enabled Sites</h3>
-                <div class="toggle-list" id="toggleList">
-                    <div class="toggle-item">
-                        <img src="./images/icon-reddit-128.png"/>
-                        <label class="switch">
-                            <input type="checkbox" id="redditSwitch">
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="toggle-item">
-                        <img src="./images/icon-imgur-128.png"/>
-                        <label class="switch">
-                            <input type="checkbox" id="imgurSwitch">
-                            <span class="slider round" title="Imgur is not yet supported"></span>
-                        </label>
-                    </div>
-                    <div class="toggle-item">
-                        <img src="./images/icon-twitter-128.png"/>
-                        <label class="switch" >
-                            <input type="checkbox" id="twitterSwitch">
-                            <span class="slider round" title="Twitter is not yet supported"></span>
-                        </label>
-                    </div>
-                    <button id="addOtherSites">Add other sites</button>
-                </div>
-                <div class="global">
-                    <img src="./images/icon-global-128.png"/>
-                    <label class="switch" >
-                        <input type="checkbox" id="globalSwitch">
-                        <span class="slider round"></span>
-                    </label>
-                </div>
+      <div class="top">
+        <div class="sites">
+          <h3>Enabled Sites</h3>
+          <div class="toggle-list" id="toggleList">
+            <div class="toggle-item">
+              <img src="./images/icon-reddit-128.png" />
+              <label class="switch">
+                <input type="checkbox" id="redditSwitch" />
+                <span class="slider round"></span>
+              </label>
             </div>
-            <div class="keywords">
-                <h3>Keywords</h3>
-                <div class="btn-container">
-                    <button id="allowedBtn">Allowed</button>
-                    <button id="blockedBtn">Blocked</button>
-                </div>
-                <div class="tag-list" id="tagList">
-                </div>
-                <textarea class="edit-tags" id="editTagsTextArea"></textarea>
-                <button class="manage-tag-list-btn" id="manageTagListBtn">Manage</button>
-                <div class="edit-tags-actions" id="editTagsActions">
-                    <button class="tags-action-btn" id="saveTagsBtn">Save</button>
-                    <button class="tags-action-btn" id="cancelTagsBtn">Cancel</button>
-                </div>
+            <div class="toggle-item">
+              <img src="./images/icon-imgur-128.png" />
+              <label class="switch">
+                <input type="checkbox" id="imgurSwitch" />
+                <span
+                  class="slider round"
+                  title="Imgur is not yet supported"
+                ></span>
+              </label>
             </div>
+            <div class="toggle-item">
+              <img src="./images/icon-twitter-128.png" />
+              <label class="switch">
+                <input type="checkbox" id="twitterSwitch" />
+                <span
+                  class="slider round"
+                  title="Twitter is not yet supported"
+                ></span>
+              </label>
+            </div>
+            <button id="addOtherSites">Add other sites</button>
+          </div>
+          <div class="global">
+            <img src="./images/icon-global-128.png" />
+            <label class="switch">
+              <input type="checkbox" id="globalSwitch" />
+              <span class="slider round"></span>
+            </label>
+          </div>
         </div>
+        <div class="keywords">
+          <h3>Keywords</h3>
+          <div class="btn-container">
+            <button id="allowedBtn">Allowed</button>
+            <button id="blockedBtn">Blocked</button>
+          </div>
+          <div class="tag-list" id="tagList"></div>
+          <textarea class="edit-tags" id="editTagsTextArea"></textarea>
+          <button class="manage-tag-list-btn" id="manageTagListBtn">
+            Manage
+          </button>
+          <div class="edit-tags-actions" id="editTagsActions">
+            <button class="tags-action-btn" id="saveTagsBtn">Save</button>
+            <button class="tags-action-btn" id="cancelTagsBtn">Cancel</button>
+          </div>
+        </div>
+      </div>
     </div>
     <footer>
-        <a href="https://github.com/se310-t6/politicry/issues" target="_blank" style="margin: 16px">
-            <span> Report an issue</span>
-        </a>
-        <a href="https://github.com/se310-t6/politicry" style="margin: 16px">
-            <span>Full Docs</span>
-            <img src="./images/external-link-128.png"/>
-        </a>
+      <a
+        href="https://github.com/se310-t6/politicry/issues"
+        target="_blank"
+        style="margin: 16px"
+      >
+        <span> Report an issue</span>
+      </a>
+      <a href="https://github.com/se310-t6/politicry" style="margin: 16px">
+        <span>Full Docs</span>
+        <img src="./images/external-link-128.png" />
+      </a>
     </footer>
-    <script src="popup.js"></script>
-</body>
+    <script src="popup.js" defer></script>
+  </body>
 </html>

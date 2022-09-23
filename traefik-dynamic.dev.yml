@@ -1,6 +1,5 @@
 http:
   middlewares:
-
     security-headers:
       headers:
         frameDeny: true

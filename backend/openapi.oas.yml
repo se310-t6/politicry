@@ -13,21 +13,21 @@ components:
       scheme: basic
 
   responses:
-    '400':
+    "400":
       description: Bad request! Likely some of your values are out of range or generally invalid.
       content:
         text/plain:
           schema:
             type: string
 
-    '422':
+    "422":
       description: Missing/invalid fields on your provided data.
       content:
         text/plain:
           schema:
             type: string
 
-    '429':
+    "429":
       description: You have made too many requests to the api recently. Implement some form of exponential back off before trying again.
 
   schemas:
@@ -55,7 +55,7 @@ components:
         media_type:
           type: string
           description: The variety of media item being sent
-          enum: ['image', 'video']
+          enum: ["image", "video"]
 
     MediaItem:
       type: object
@@ -81,7 +81,7 @@ components:
         media_type:
           type: string
           description: The variety of media item being sent
-          enum: ['image', 'video']
+          enum: ["image", "video"]
         detections:
           type: array
           description: The list of words to upload.
@@ -105,7 +105,7 @@ components:
           type: array
           description: an array of media items to request detections for
           items:
-            $ref: '#/components/schemas/MediaItemWithoutDetection'
+            $ref: "#/components/schemas/MediaItemWithoutDetection"
 
     DetectionSet:
       type: object
@@ -121,7 +121,7 @@ components:
           type: array
           description: an array of media items with detections
           items:
-            $ref: '#/components/schemas/MediaItem'
+            $ref: "#/components/schemas/MediaItem"
 
     NewRegistration:
       type: object
@@ -139,12 +139,12 @@ paths:
     get:
       summary: Request a new registration from the api, this doesn't require user input.
       responses:
-        '200':
+        "200":
           description: New user successfully registered.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewRegistration'
+                $ref: "#/components/schemas/NewRegistration"
 
   /api/1/posts:
     post:
@@ -154,23 +154,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DetectionGet'
+              $ref: "#/components/schemas/DetectionGet"
       security:
         - basicAuth: []
       responses:
-        '200':
+        "200":
           description: Successfully collected information for items on the provided word list. Note that this just indicates the request was successful, it is possible that there are no detections in the returned data.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DetectionSet'
+                $ref: "#/components/schemas/DetectionSet"
 
-        '400':
-          $ref: '#/components/responses/400'
-        '422':
-          $ref: '#/components/responses/422'
-        '429':
-          $ref: '#/components/responses/429'
+        "400":
+          $ref: "#/components/responses/400"
+        "422":
+          $ref: "#/components/responses/422"
+        "429":
+          $ref: "#/components/responses/429"
 
   /api/1/detections:
     post:
@@ -180,19 +180,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DetectionSet'
+              $ref: "#/components/schemas/DetectionSet"
       security:
         - basicAuth: []
 
       responses:
-        '200':
+        "200":
           description: Detections received and accepted.
           content:
             plain/text:
               example: OK
-        '400':
-          $ref: '#/components/responses/400'
-        '422':
-          $ref: '#/components/responses/422'
-        '429':
-          $ref: '#/components/responses/429'
+        "400":
+          $ref: "#/components/responses/400"
+        "422":
+          $ref: "#/components/responses/422"
+        "429":
+          $ref: "#/components/responses/429"
