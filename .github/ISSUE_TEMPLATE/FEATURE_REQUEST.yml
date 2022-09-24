@@ -3,9 +3,7 @@
 name: "Feature Request"
 description: Request that a new feature be added
 title: "💡 [REQUEST] - <title>"
-labels: [
-  "question"
-]
+labels: ["question"]
 body:
   - type: textarea
     id: reference_issues

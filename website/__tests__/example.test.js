@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/vue";
+// eslint-disable-next-line import/no-unresolved
 import ProfileCard from "@/components/ProfileCard.vue";
 
 describe("ProfileCard", () => {

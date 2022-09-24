@@ -2,11 +2,11 @@
   "author": "SE310-T6",
   "description": "A tool to remove political posts from popular social media platforms.",
   "dependencies": {
+    "@cypress/code-coverage": "^3.10.0",
     "cypress": "^10.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
-    "@cypress/code-coverage": "^3.10.0",
     "@types/chrome": "^0.0.193",
     "babel-plugin-istanbul": "^6.1.1",
     "copy-webpack-plugin": "^11.0.0",

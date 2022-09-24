@@ -14,11 +14,14 @@
 ## Checklist
 
 <!-- If not applicable to this PR, the item can be checked, crossed out, or removed. -->
+
 ### Documentation
+
 - [ ] Updated the readme documents (`README.md` etc.)
 - [ ] New functions and methods have additional comments added to document their usage
 
 ### Local Build
+
 - [ ] Ran all pre-commit hooks `pre-commit run --all-files`
 - [ ] Extension has been tested to build correctly `cd extension && yarn && yarn build`
 - [ ] Backend has been tested to build correctly `cd backend && docker-compose build`
@@ -26,6 +29,7 @@
 - [ ] Backend test suite has been run locally `cd backend && python3 -m unittest`
 
 ### GitHub
+
 - [ ] Target branch has been set correctly
 - [ ] PR has been rebased onto target branch
 - [ ] PR has been assigned an owner

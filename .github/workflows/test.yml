@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   test-and-coverage-backend:
     runs-on: ubuntu-latest
-    name: Test and Coverage Backend
+    name: Lint, Test, and Coverage
 
     steps:
       - name: Check out source repository
@@ -33,16 +33,28 @@ jobs:
         env:
           FLASK_APP: app.py
 
-      - name: Run Tests
+      - name: Run yarn install
+        continue-on-error: true
         run: |
+          yarn
           cd extension
           yarn
+          cd ../website
+          yarn
+
+      - name: Run Linter & Code Formatter
+        continue-on-error: true
+        run: |
+          yarn lint
+
+      - name: Run Extension Tests
+        run: |
+          cd extension
           yarn test:ci
 
       - name: Run Frontend Tests
         run: |
           cd website
-          yarn
           yarn test
 
       - name: Run Backend Tests
