@@ -1,11 +1,14 @@
 name: Test
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
-  test-and-coverage-backend:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    name: Lint, Test, and Coverage
 
     steps:
       - name: Check out source repository
@@ -76,3 +79,32 @@ jobs:
           files: ./backend/coverage.xml,./extension/coverage/clover.xml,./website/coverage/clover.xml
           fail_ci_if_error: true
           verbose: true
+
+      - name: 🔊 Save PR number (for SonarCloud)
+        if: github.event_name == 'pull_request'
+        run: echo ${{ github.event.number }} > PR_NUMBER.txt
+
+      - name: 🔊 Upload PR number to GitHub Artifacts (for SonarCloud)
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: PR_NUMBER
+          path: PR_NUMBER.txt
+
+      - name: 🔊 Upload extension code coverage to GitHub Artifacts (for SonarCloud)
+        uses: actions/upload-artifact@v2
+        with:
+          name: cov-extension
+          path: ./extension/coverage/lcov.info
+
+      - name: 🔊 Upload website code coverage to GitHub Artifacts (for SonarCloud)
+        uses: actions/upload-artifact@v2
+        with:
+          name: cov-website
+          path: ./website/coverage/lcov.info
+
+      - name: 🔊 Upload backend code coverage to GitHub Artifacts (for SonarCloud)
+        uses: actions/upload-artifact@v2
+        with:
+          name: cov-backend
+          path: ./backend/coverage.xml
