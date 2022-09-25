@@ -7,8 +7,8 @@
   },
   "content_scripts": [
     {
-      "js": ["tesseract.min.js", "reddit.js"],
-      "matches": ["https://www.reddit.com/*", "https://www.imgur.com/*"]
+      "js": ["tesseract.min.js", "reddit.js", "instagram.js"],
+      "matches": ["https://www.reddit.com/*", "https://www.instagram.com/*"]
     }
   ],
   "description": "A tool to remove political posts from popular social media platforms.",
