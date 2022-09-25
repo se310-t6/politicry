@@ -1,6 +1,5 @@
 /** @param {HTMLImageElement} img */
 function blurImage(img) {
-  // eslint-disable-next-line no-param-reassign
   img.style.filter = "blur(30px)";
 }
 

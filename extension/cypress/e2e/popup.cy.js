@@ -5,7 +5,6 @@ describe("extension popup", () => {
     cy.visit("http://localhost:1234", {
       onBeforeLoad(window) {
         // mock the chrome extension APIs
-        /* eslint-disable no-param-reassign */
         if (!window.chrome) window.chrome = {};
         window.chrome.storage = {
           sync: {
@@ -13,7 +12,6 @@ describe("extension popup", () => {
             get: ([name], cb) => cb({ [name]: name === "redditToggled" }),
             set: () => undefined, // no-op
           },
-          /* eslint-enable no-param-reassign */
         };
       },
     });

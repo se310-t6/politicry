@@ -1,8 +1,7 @@
 /** @param {HTMLDivElement} el */
 function checkTweet(el) {
   if (window.matchesBlocklist(el.innerText)) {
-    // eslint-disable-next-line no-param-reassign
-    el.style.filter = "blur(2px)";
+    el.style.filter = "blur(4px)";
   }
 }
 

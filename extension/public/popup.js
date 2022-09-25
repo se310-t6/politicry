@@ -35,10 +35,10 @@ const switches = {
 
 // Set initial state of toggles
 for (const storageKey in switches) {
-  const switchEl = switches[storageKey];
+  const switchElement = switches[storageKey];
 
   const updatePreferences = () => {
-    chrome.storage.sync.set({ [storageKey]: switchEl.checked });
+    chrome.storage.sync.set({ [storageKey]: switchElement.checked });
     if (storageKey === "globalToggled") {
       // there's an extra step for global switch
       globalSwitchHandler();
@@ -46,10 +46,10 @@ for (const storageKey in switches) {
   };
 
   // onchange instead of onclick as the state may change programatically
-  switchEl.onchange = updatePreferences;
+  switchElement.onchange = updatePreferences;
 
   chrome.storage.sync.get([storageKey], (data) => {
-    switchEl.checked = data[storageKey];
+    switchElement.checked = data[storageKey];
     updatePreferences();
   });
 }
