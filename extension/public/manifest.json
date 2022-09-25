@@ -1,6 +1,11 @@
 {
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "/images/logo-128.png",
+      "16": "/images/logo-16.png",
+      "48": "/images/logo-48.png"
+    }
   },
   "background": {
     "service_worker": "background.js"
@@ -27,13 +32,6 @@
   },
   "manifest_version": 3,
   "name": "Politicry",
-  "page_action": {
-    "default_icon": {
-      "128": "/images/logo-128.png",
-      "16": "/images/logo-16.png",
-      "48": "/images/logo-48.png"
-    }
-  },
   "permissions": ["activeTab", "scripting", "storage"],
   "version": "1.0"
 }
