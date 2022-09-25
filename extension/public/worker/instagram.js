@@ -1,18 +1,3 @@
-// copied from reddit.js
-const blockedWordsData = [
-  "trump",
-  "terrorist",
-  "communism",
-  "racism",
-  "isis",
-  "pizza",
-];
-
-/* returns true if the supplied text matches any word in the blocked list */
-function matchesBlocklist(text) {
-  return blockedWordsData.some((word) => text.includes(word));
-}
-
 /** @param {HTMLImageElement} img */
 function blurImage(img) {
   // eslint-disable-next-line no-param-reassign
@@ -25,7 +10,7 @@ function checkOpenPost() {
 
   if (!caption) return; // abort, there is no post open right now
 
-  const anyMatches = matchesBlocklist(caption.innerText.toLowerCase());
+  const anyMatches = window.matchesBlocklist(caption.innerText.toLowerCase());
 
   if (anyMatches) {
     let parent = caption;
@@ -50,7 +35,7 @@ function checkOpenPost() {
 
 /** @param {HTMLImageElement} img */
 function checkImage(img) {
-  if (img.alt && matchesBlocklist(img.alt)) {
+  if (img.alt && window.matchesBlocklist(img.alt)) {
     blurImage(img);
   }
 }
