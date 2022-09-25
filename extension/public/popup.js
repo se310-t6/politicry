@@ -6,19 +6,18 @@
 // UI references
 const toggleList = document.getElementById("toggleList");
 const redditSwitch = document.getElementById("redditSwitch");
-const imgurSwitch = document.getElementById("imgurSwitch");
+const instagramSwitch = document.getElementById("instagramSwitch");
 const twitterSwitch = document.getElementById("twitterSwitch");
 const addOtherSites = document.getElementById("addOtherSites");
 const globalSwitch = document.getElementById("globalSwitch");
 
-// Politicry is not yet available for Imgur and Twitter
-imgurSwitch.disabled = true;
+// Politicry is not yet available for Twitter
 twitterSwitch.disabled = true;
 
 const globalSwitchHandler = () => {
   if (globalSwitch.checked === true) {
     redditSwitch.checked = false;
-    imgurSwitch.checked = false;
+    instagramSwitch.checked = false;
     twitterSwitch.checked = false;
 
     toggleList.style.pointerEvents = "none";
