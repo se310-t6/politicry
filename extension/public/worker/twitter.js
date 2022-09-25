@@ -5,9 +5,14 @@ function checkTweet(el) {
   }
 }
 
-// check every 1 second if a new post has been loaded
-setInterval(() => {
-  // check every visible tweet, which can be identified since it's a
-  // div with an attribute called lang="en". Politicry only supports English (for now)
-  document.querySelectorAll('div[lang="en"]').forEach(checkTweet);
-}, 1000);
+window.onceReady = () => {
+  // quit if twitter is not enabled
+  if (!window.enabled.twitter) return;
+
+  // check every 1 second if a new post has been loaded
+  setInterval(() => {
+    // check every visible tweet, which can be identified since it's a
+    // div with an attribute called lang="en". Politicry only supports English (for now)
+    document.querySelectorAll('div[lang="en"]').forEach(checkTweet);
+  }, 1000);
+};

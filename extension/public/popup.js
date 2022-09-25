@@ -86,6 +86,7 @@ const renderAllowedWords = () => {
     const allowedWordsData = data.allowedWords;
     if (allowedWordsData === undefined || allowedWordsData.length === 0) {
       tagList.innerHTML = "No keywords set!";
+      return;
     }
 
     const max = 4;
@@ -111,9 +112,9 @@ const renderAllowedWords = () => {
 const renderBlockedWords = () => {
   hideTagsEdit();
   chrome.storage.sync.get(["blockedWords"], (data) => {
-    const blockedWordsData = data.blockedWords;
+    let blockedWordsData = data.blockedWords;
     if (!blockedWordsData || blockedWordsData.length === 0) {
-      tagList.innerHTML = "No keywords set!";
+      blockedWordsData = window.defaultBlockedWordsList;
     }
 
     const max = 4;
@@ -143,11 +144,13 @@ const renderTagsEdit = () => {
 
   if (manageTagListBtn.innerHTML === "Edit Allowed") {
     chrome.storage.sync.get(["allowedWords"], (data) => {
-      editTagsTextArea.value = arrayToCsv(data.allowedWords);
+      editTagsTextArea.value = arrayToCsv(data.allowedWords || []);
     });
   } else {
     chrome.storage.sync.get(["blockedWords"], (data) => {
-      editTagsTextArea.value = arrayToCsv(data.blockedWords);
+      let list = data.blockedWords;
+      if (!list || !list.length) list = window.defaultBlockedWordsList;
+      editTagsTextArea.value = arrayToCsv(list);
     });
   }
 };

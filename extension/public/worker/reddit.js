@@ -13,6 +13,9 @@ const Reddit = {
 
   // initalize
   initialize() {
+    // quit if reddit is not enabled
+    if (!window.enabled.reddit) return;
+
     this.blurImage();
     this.checkForUpdate();
   },
@@ -33,17 +36,6 @@ const Reddit = {
   // check if any configured keywords are found in a post
   // return true if found
   async filterText(post, callBack) {
-    // temporary filter data
-    // these data must be stored in cookie
-    const blockedWordsData = [
-      "trump",
-      "terrorist",
-      "communism",
-      "racism",
-      "isis",
-      "pizza",
-    ];
-
     const title = this.getDOMTitle(post);
     const description = this.getDOMDescription(post);
     // image varible contain image url then contain result of ocr
@@ -59,19 +51,7 @@ const Reddit = {
       callBack();
     }
 
-    // search if blockedwords are in the title
-    // true if found
-    let isInclude = false;
-    for (const i in blockedWordsData) {
-      if (title.includes(blockedWordsData[i])) {
-        isInclude = true;
-      } else if (image.includes(blockedWordsData[i])) {
-        isInclude = true;
-      } else if (description.includes(blockedWordsData[i])) {
-        isInclude = true;
-      }
-    }
-    return isInclude;
+    return window.matchesBlocklist(title + description + image);
   },
 
   // extract text from image using tesseract
@@ -133,22 +113,18 @@ const Reddit = {
   // retrive the posts iamge link
   getDOMImageLink(_post) {
     const classSelector = "._2_tDEnGMLxpM6uOa2kaDB3";
-    let url = _post.querySelector(classSelector);
-    if (url !== undefined) {
-      url = url.getAttribute("src");
-      // console.log("image url: " + url); // DEBUG
-      return url;
+    const url = _post.querySelector(classSelector);
+    if (url) {
+      return url.getAttribute("src");
     } // image link was empty, hence the post does not contain image
     return "";
   },
 
   getDOMTitle(_post) {
     const classSelector = "._eYtD2XCVieq6emjKBH3m";
-    let title = _post.querySelector(classSelector);
-    if (title !== undefined) {
-      title = title.textContent.toLowerCase();
-      // console.log("post title: " + title); // DEBUG
-      return title;
+    const title = _post.querySelector(classSelector);
+    if (title) {
+      return title.textContent.toLowerCase();
     } // title was empty, returns empty string value
     return "";
   },
@@ -157,7 +133,7 @@ const Reddit = {
   getDOMDescription(_post) {
     const descriptionSelector = "._292iotee39Lmt0MkQZ2hPV";
     let description = _post.querySelector(descriptionSelector);
-    if (description !== undefined) {
+    if (description) {
       description = description.textContent.toLowerCase();
       // console.log("post description: " + description); // DEBUG
       return description;
@@ -166,4 +142,4 @@ const Reddit = {
   },
 };
 
-Reddit.initialize();
+window.onceReady = () => Reddit.initialize();
