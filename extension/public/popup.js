@@ -11,9 +11,6 @@ const twitterSwitch = document.getElementById("twitterSwitch");
 const addOtherSites = document.getElementById("addOtherSites");
 const globalSwitch = document.getElementById("globalSwitch");
 
-// Politicry is not yet available for Twitter
-twitterSwitch.disabled = true;
-
 const globalSwitchHandler = () => {
   if (globalSwitch.checked === true) {
     redditSwitch.checked = false;
@@ -26,28 +23,36 @@ const globalSwitchHandler = () => {
     toggleList.style.pointerEvents = "auto";
     toggleList.style.opacity = "100%";
   }
-
-  chrome.storage.sync.set({ globalToggled: globalSwitch.checked });
 };
 
-const redditSwitchHandler = () => {
-  chrome.storage.sync.set({ redditToggled: redditSwitch.checked });
+// a map of all the switche elements, keyed by their storageKey in chrome storage
+const switches = {
+  redditToggled: redditSwitch,
+  instagramToggled: instagramSwitch,
+  twitterToggled: twitterSwitch,
+  globalToggled: globalSwitch,
 };
-
-// onchange instead of onclick as the state may change programatically
-globalSwitch.onchange = globalSwitchHandler;
-redditSwitch.onchange = redditSwitchHandler;
 
 // Set initial state of toggles
-chrome.storage.sync.get(["redditToggled"], (data) => {
-  redditSwitch.checked = data.redditToggled;
-  redditSwitchHandler();
-});
+for (const storageKey in switches) {
+  const switchElement = switches[storageKey];
 
-chrome.storage.sync.get(["globalToggled"], (data) => {
-  globalSwitch.checked = data.globalToggled;
-  globalSwitchHandler();
-});
+  const updatePreferences = () => {
+    chrome.storage.sync.set({ [storageKey]: switchElement.checked });
+    if (storageKey === "globalToggled") {
+      // there's an extra step for global switch
+      globalSwitchHandler();
+    }
+  };
+
+  // onchange instead of onclick as the state may change programatically
+  switchElement.onchange = updatePreferences;
+
+  chrome.storage.sync.get([storageKey], (data) => {
+    switchElement.checked = data[storageKey];
+    updatePreferences();
+  });
+}
 
 /** ******** Keywords **********/
 

@@ -11,6 +11,7 @@
   "eslintConfig": {
     "extends": "kyle",
     "rules": {
+      "no-param-reassign": "off",
       "no-plusplus": "off"
     },
     "overrides": [
