@@ -39,11 +39,16 @@ function checkImage(img) {
   }
 }
 
-// check every 1 second if a new post has been loaded
-setInterval(() => {
-  // part 1: check the main post visible
-  checkOpenPost();
+window.onceReady = () => {
+  // part 0: quit if instagram is not enabled
+  if (!window.enabled.instagram) return;
 
-  // part 2: check the alt-text of every image
-  document.querySelectorAll("img").forEach(checkImage);
-}, 1000);
+  // check every 1 second if a new post has been loaded
+  setInterval(() => {
+    // part 1: check the main post visible
+    checkOpenPost();
+
+    // part 2: check the alt-text of every image
+    document.querySelectorAll("img").forEach(checkImage);
+  }, 1000);
+};
