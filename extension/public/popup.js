@@ -101,10 +101,11 @@ const renderAllowedWords = () => {
         : "";
 
     for (let i = 0; i < numTagItems; i++) {
-      tagItems += `<div class="tag-item">${allowedWordsData[i]}</div>`;
+      tagItems += `<div class="tag-item" ><span class="tagText">${allowedWordsData[i]}</span></div>`;
     }
 
     tagList.innerHTML = tagItems + moreResults;
+    
   });
 };
 
