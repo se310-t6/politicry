@@ -233,7 +233,6 @@ header {
   padding: 0 12px 0 12px;
 
   height: 24px;
-  max-width: 124px;
 
   text-align: center;
   color: white;
@@ -242,7 +241,6 @@ header {
 
   border-radius: 12px;
   background-color: #c54ccf;
-
 }
 
 .keywords .tag-list .tag-results-item {
@@ -262,8 +260,8 @@ header {
 }
 
 /* Tag Item's Text */
-.keywords .tag-list .tag-item .tag-text{
-    max-width: 112px;
+.keywords .tag-list .tag-text{
+    max-width: 124px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
