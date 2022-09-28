@@ -241,6 +241,12 @@ header {
 
   border-radius: 12px;
   background-color: #c54ccf;
+
+  max-width: 124px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .keywords .tag-list .tag-results-item {
@@ -256,6 +262,12 @@ header {
   border-radius: 12px;
   border: 2px solid #c54ccf;
   background-color: rgba(255, 255, 255, 0);
+
+  max-width: 124px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .keywords .manage-tag-list-btn {
