@@ -104,7 +104,7 @@ const renderAllowedWords = () => {
       tagItems += `<div class="tag-item">${allowedWordsData[i]}</div>`;
     }
 
-    tagList.innerHTML = tagItems + moreResults;    
+    tagList.innerHTML = tagItems + moreResults;
   });
 };
 
