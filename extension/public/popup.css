@@ -241,13 +241,18 @@ header {
 
   border-radius: 12px;
   background-color: #c54ccf;
+
+  max-width: 124px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .keywords .tag-list .tag-results-item {
   padding: 0 12px 0 12px;
 
   height: 20px;
-  max-width: 124px;
 
   text-align: center;
   color: #c54ccf;
@@ -257,15 +262,12 @@ header {
   border-radius: 12px;
   border: 2px solid #c54ccf;
   background-color: rgba(255, 255, 255, 0);
-}
 
-/* Tag Item's Text */
-.keywords .tag-list .tag-text{
-    max-width: 124px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    display: inline-block;
+  max-width: 124px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .keywords .manage-tag-list-btn {
