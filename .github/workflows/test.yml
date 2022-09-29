@@ -1,4 +1,4 @@
-name: Test
+name: Build
 
 on:
   push:
@@ -46,7 +46,6 @@ jobs:
           yarn
 
       - name: Run Linter & Code Formatter
-        continue-on-error: true
         run: |
           yarn lint
 
@@ -77,7 +76,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./backend/coverage.xml,./extension/coverage/clover.xml,./website/coverage/clover.xml
-          fail_ci_if_error: true
+          fail_ci_if_error: false
           verbose: true
 
       - name: 🔊 Save PR number (for SonarCloud)
