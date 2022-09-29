@@ -1,5 +1,18 @@
 # Politicry
 
+![Test](https://github.com/se310-t6/politicry/actions/workflows/test.yml/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=bugs)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=coverage)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
+
 ![A comic of a crying man with yellow hair](https://camo.githubusercontent.com/1851fbb05a7492b6e79caeb8664d3d394b69cf3efe5327bedc167ff75240b27f/68747470733a2f2f63646e2e646973636f72646170702e636f6d2f6174746163686d656e74732f3931303735333430313339333030303436312f313030333538393436383933363232343833382f556e7469746c65645f417274776f726b2e706e67)
 
 [![codecov](https://codecov.io/gh/se310-t6/politicry/branch/main/graph/badge.svg?token=JSL2O5JZNP)](https://codecov.io/gh/se310-t6/politicry)
