@@ -113,8 +113,11 @@ const renderBlockedWords = () => {
   hideTagsEdit();
   chrome.storage.sync.get(["blockedWords"], (data) => {
     let blockedWordsData = data.blockedWords;
-    if (!blockedWordsData || blockedWordsData.length === 0) {
+    if (!blockedWordsData) {
       blockedWordsData = window.defaultBlockedWordsList;
+    } else if (blockedWordsData.length === 0) {
+      tagList.innerHTML = "No keywords set!";
+      return;
     }
 
     const max = 4;
@@ -149,7 +152,7 @@ const renderTagsEdit = () => {
   } else {
     chrome.storage.sync.get(["blockedWords"], (data) => {
       let list = data.blockedWords;
-      if (!list || !list.length) list = window.defaultBlockedWordsList;
+      if (!list) list = window.defaultBlockedWordsList;
       editTagsTextArea.value = arrayToCsv(list);
     });
   }
