@@ -216,3 +216,25 @@ saveBtn.onclick = saveBtnHandler;
 cancelBtn.onclick = cancelBtnHandler;
 
 allowedBtnHandler();
+
+// send context infomation to the report page when the user clicks the report link
+document.querySelector("#report-link").addEventListener("click", async () => {
+  const settings = await chrome.storage.sync.get([
+    "blockedWords",
+    "allowedWords",
+    ...Object.keys(switches), // request all the switch states
+  ]);
+  const tabs = await chrome.tabs.query({
+    active: true,
+    lastFocusedWindow: true,
+  });
+
+  const context = { ...settings, currentUrl: tabs[0].url };
+
+  // open the help page in a new tag, and append the data to the end of the URL
+  window.open(
+    `https://politicry.com/report#${btoa(JSON.stringify(context))}`,
+    "_blank",
+    "noopener",
+  );
+});
