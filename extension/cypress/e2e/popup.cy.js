@@ -21,4 +21,33 @@ describe("extension popup", () => {
     cy.get("#redditSwitch").should("be.checked");
     cy.get("#instagramSwitch").should("not.be.checked");
   });
+
+  it("displays/hides UI components at the start", () => {
+    cy.get("#tagList").should("have.css", "display", "flex");
+    cy.get("#editTagsTextArea").should("have.css", "display", "none");
+
+    cy.get("#manageTagListBtn").should("have.css", "display", "flex");
+    cy.get("#editTagsActions").should("have.css", "display", "none");
+  });
+
+  it("displays/hides UI components when in edit mode", () => {
+    cy.get("#manageTagListBtn").click();
+
+    cy.get("#tagList").should("have.css", "display", "none");
+    cy.get("#editTagsTextArea").should("have.css", "display", "flex");
+
+    cy.get("#editTagsActions").should("have.css", "display", "flex");
+    cy.get("#manageTagListBtn").should("have.css", "display", "none");
+  });
+
+  it("displays/hides UI components when exiting edit mode", () => {
+    cy.get("#manageTagListBtn").click();
+    cy.get("#cancelTagsBtn").click();
+
+    cy.get("#tagList").should("have.css", "display", "flex");
+    cy.get("#editTagsTextArea").should("have.css", "display", "none");
+
+    cy.get("#manageTagListBtn").should("have.css", "display", "flex");
+    cy.get("#editTagsActions").should("have.css", "display", "none");
+  });
 });
