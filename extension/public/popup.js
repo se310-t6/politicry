@@ -68,9 +68,10 @@ const cancelBtn = document.getElementById("cancelTagsBtn");
 
 // Helper:
 const hideTagsEdit = () => {
-  manageTagListBtn.style.visibility = "visible";
-  editTagsActions.style.visibility = "hidden";
-  editTagsTextArea.style.visibility = "hidden";
+  manageTagListBtn.style.display = "flex";
+  editTagsActions.style.display = "none";
+  editTagsTextArea.style.display = "none";
+  tagList.style.display = "flex";
 };
 
 // Helper:
@@ -141,9 +142,10 @@ const renderBlockedWords = () => {
 
 // Helper:
 const renderTagsEdit = () => {
-  manageTagListBtn.style.visibility = "hidden";
-  editTagsActions.style.visibility = "visible";
-  editTagsTextArea.style.visibility = "visible";
+  manageTagListBtn.style.display = "none";
+  editTagsActions.style.display = "flex";
+  editTagsTextArea.style.display = "flex";
+  tagList.style.display = "none";
 
   if (manageTagListBtn.innerHTML === "Edit Allowed") {
     chrome.storage.sync.get(["allowedWords"], (data) => {

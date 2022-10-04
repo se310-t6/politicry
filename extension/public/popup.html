@@ -40,8 +40,8 @@
       </div>
     </header>
     <div class="content">
-      <div class="top">
-        <div class="sites">
+      <div class="sites">
+        <div class="sites-content">
           <h3>Enabled Sites</h3>
           <div class="toggle-list" id="toggleList">
             <div class="toggle-item">
@@ -74,22 +74,26 @@
               <button id="addOtherSites">Add other sites</button>
             </form>
           </div>
-          <div class="global">
-            <img alt="Globe icon" src="./images/icon-global-128.png" />
-            <label class="switch">
-              <input type="checkbox" id="globalSwitch" />
-              <span class="slider round"></span>
-            </label>
-          </div>
         </div>
-        <div class="keywords">
+        <div class="global">
+          <img alt="Globe icon" src="./images/icon-global-128.png" />
+          <label class="switch">
+            <input type="checkbox" id="globalSwitch" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+      <div class="keywords">
+        <div class="keywords-content">
           <h3>Keywords</h3>
           <div class="btn-container">
             <button id="allowedBtn">Allowed</button>
             <button id="blockedBtn">Blocked</button>
           </div>
-          <div class="tag-list" id="tagList"></div>
-          <textarea class="edit-tags" id="editTagsTextArea"></textarea>
+          <div class="tags">
+            <div class="tag-list" id="tagList"></div>
+            <textarea class="edit-tags" id="editTagsTextArea"></textarea>
+          </div>
           <button class="manage-tag-list-btn" id="manageTagListBtn">
             Manage
           </button>

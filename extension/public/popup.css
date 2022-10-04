@@ -5,14 +5,7 @@
 
 body {
   width: 400px;
-  height: 514px;
   outline: 1px solid black;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-
   font-family: "Anek Malayalam", sans-serif;
 }
 
@@ -23,31 +16,19 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 5% 0 5%;
+  padding: 0 16px;
 
   min-height: 80px;
   color: white;
-  width: 90%;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
-.logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
 .logo a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
 }
 
 .logo a img {
   height: 36px;
-  width: 134px;
 }
 
 .version {
@@ -70,77 +51,58 @@ header {
 
 .content {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+  column-gap: 10px;
+  padding: 10px;
+  min-height: 300px;
+
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.content .top {
-  width: 100%;
-  height: 350px;
-}
-
-/*------- Top: Enabled Sites -------*/
-
-.sites {
-  position: absolute;
-  width: 178px;
-  height: 335px;
-  left: 10px;
-  top: 90px;
+.sites, .keywords {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
 
   background: #ffffff;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
-.top div h3 {
-  position: absolute;
-  height: 19px;
-  left: 16px;
-  top: 16px;
-
-  font-style: normal;
-  font-weight: 00;
+h3 {
   font-size: 20px;
-  line-height: 19px;
-
-  display: flex;
-  align-items: center;
-
-  color: #000000;
 }
 
-.content .top .sites .toggle-list {
-  position: absolute;
-  top: 51px;
-  width: 100%;
+.sites-content, .keywords-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  padding: 16px 8px;
+}
 
+/*------- Top: Enabled Sites -------*/
+
+.sites .toggle-list {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
   row-gap: 12px;
 }
 
-.content .top .sites .toggle-list .toggle-item {
+.sites .toggle-list .toggle-item {
   display: flex;
   justify-content: center;
   align-items: center;
   column-gap: 10px;
-  height: 40px;
 }
 
-.content .top .sites .toggle-list .toggle-item img {
+.sites .toggle-list .toggle-item img {
   width: 36px;
   height: 36px;
-  left: 22px;
-  top: 6px;
 }
 
-.content .top .sites button {
+.sites button {
   margin-top: 10px;
   text-decoration: underline;
   border: 0;
@@ -153,17 +115,11 @@ header {
   transition: 0.2s ease;
 }
 
-.content .top .sites button:hover {
+.sites button:hover {
   color: #d9381e;
 }
 
 .sites .global {
-  position: absolute;
-  width: 178px;
-  height: 68px;
-  left: 0px;
-  bottom: 0px;
-
   background: rgba(0, 0, 0, 0.8);
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
   color: white;
@@ -172,6 +128,7 @@ header {
   justify-content: center;
   align-items: center;
   column-gap: 12px;
+  padding: 16px 0px;
 }
 
 .sites .global img {
@@ -180,61 +137,40 @@ header {
 
 /*------- Top: Keywords -------*/
 
-.keywords {
-  position: absolute;
-  width: 192px;
-  height: 335px;
-  left: 198px;
-  top: 90px;
-
-  background: #ffffff;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
-}
-
 .keywords .btn-container {
-  position: absolute;
-  top: 51px;
-  left: 22px;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background-color: #0f8e00;
-  width: 148px;
-  height: 30px;
+  width: 100%;
+  margin-top: 16px;
 }
 
 .keywords .btn-container button {
   width: 50%;
-  height: 100%;
   background-color: #999999;
   border: none;
   color: white;
+  padding: 8px;
+}
+
+.keywords .tags {
+  min-height: 175px;
+  height: 100%;
+  margin: 8px 0px;
 }
 
 .keywords .tag-list {
-  position: absolute;
-  top: 100px;
-  left: 22px;
-
-  width: 148px;
-
-  font-size: 16px;
-
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+
+  font-size: 16px;
   row-gap: 7px;
+  margin-top: 16px;
 }
 
 .keywords .tag-list .tag-item {
   padding: 0 12px 0 12px;
-
-  height: 24px;
-
-  text-align: center;
   color: white;
   font-weight: 500;
   font-size: 16px;
@@ -242,7 +178,7 @@ header {
   border-radius: 12px;
   background-color: #c54ccf;
 
-  max-width: 124px;
+  max-width: 120px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -252,9 +188,6 @@ header {
 .keywords .tag-list .tag-results-item {
   padding: 0 12px 0 12px;
 
-  height: 20px;
-
-  text-align: center;
   color: #c54ccf;
   font-weight: 500;
   font-size: 16px;
@@ -263,7 +196,7 @@ header {
   border: 2px solid #c54ccf;
   background-color: rgba(255, 255, 255, 0);
 
-  max-width: 124px;
+  max-width: 120px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -271,19 +204,13 @@ header {
 }
 
 .keywords .manage-tag-list-btn {
-  position: absolute;
-  bottom: 20px;
-  left: 26px;
-
-  width: 140px;
-  height: 40px;
-
   color: white;
   font-weight: 600;
 
   background-color: #2196f3;
   border: none;
   border-radius: 10px;
+  padding: 8px;
 
   cursor: pointer;
 }
@@ -293,45 +220,33 @@ header {
 }
 
 .edit-tags {
-  position: absolute;
-  top: 100px;
-  left: 22px;
-
-  width: 148px;
-  height: 160px;
-
   resize: none;
-  visibility: hidden;
+  display: none;
+  height: 100%;
 }
 
 .edit-tags-actions {
-  visibility: hidden;
+  display: none;
+  column-gap: 8px;
 }
 
 .tags-action-btn {
-  position: absolute;
-  bottom: 40px;
-
-  width: 60px;
-  height: 24px;
-
   color: white;
-  font-weight: 200;
+  font-weight: 600;
 
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
+  padding: 8px;
 
   cursor: pointer;
 }
 
 #saveTagsBtn {
   background-color: #2196f3;
-  left: 32px;
 }
 
 #cancelTagsBtn {
   background-color: #999999;
-  right: 32px;
 }
 /*------- Footer -------*/
 
@@ -341,7 +256,6 @@ footer {
   justify-content: center;
   align-items: center;
 
-  width: 100%;
   min-height: 80px;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
 }
