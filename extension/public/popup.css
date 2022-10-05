@@ -337,3 +337,20 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+/* Tooltips */
+.tooltip { 
+  visibility: hidden; 
+  position: absolute;
+  z-index: 1;
+  
+  background-color: #000;
+  color: #fff;
+  padding: 4px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.tooltip-element:hover .tooltip {
+  visibility: visible;
+}

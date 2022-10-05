@@ -45,21 +45,30 @@
           <h3>Enabled Sites</h3>
           <div class="toggle-list" id="toggleList">
             <div class="toggle-item">
-              <img alt="Reddit logo" src="./images/icon-reddit-128.png" />
+              <div class="tooltip-element">
+                <img alt="Reddit logo" src="./images/icon-reddit-128.png" />
+                <span class="tooltip">Reddit</span>
+              </div>
               <label class="switch">
                 <input type="checkbox" id="redditSwitch" />
                 <span class="slider round"></span>
               </label>
             </div>
             <div class="toggle-item">
-              <img alt="Instagram logo" src="./images/icon-instagram-128.png" />
+              <div class="tooltip-element">
+                <img alt="Instagram logo" src="./images/icon-instagram-128.png" />
+                <span class="tooltip">Instagram</span>
+              </div>
               <label class="switch">
                 <input type="checkbox" id="instagramSwitch" />
                 <span class="slider round"></span>
               </label>
             </div>
             <div class="toggle-item">
-              <img alt="Twitter logo" src="./images/icon-twitter-128.png" />
+              <div class="tooltip-element">
+                <img alt="Twitter logo" src="./images/icon-twitter-128.png" />
+                <span class="tooltip">Twitter</span>
+              </div>
               <label class="switch">
                 <input type="checkbox" id="twitterSwitch" />
                 <span class="slider round"></span>
@@ -77,10 +86,13 @@
         </div>
         <div class="global">
           <img alt="Globe icon" src="./images/icon-global-128.png" />
-          <label class="switch">
-            <input type="checkbox" id="globalSwitch" />
-            <span class="slider round"></span>
-          </label>
+          <div class="tooltip-element">
+            <label class="switch">
+              <input type="checkbox" id="globalSwitch" />
+              <span class="slider round"></span>
+            </label>
+            <span class="tooltip">Disable everywhere</span>
+          </div>
         </div>
       </div>
       <div class="keywords">
