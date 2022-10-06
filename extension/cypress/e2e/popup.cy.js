@@ -30,10 +30,22 @@ describe("extension popup", () => {
     });
   });
 
+  // Checbox tests
+
   it("enables the correct checkboxes", () => {
     cy.get("#redditSwitch").should("be.checked");
     cy.get("#instagramSwitch").should("not.be.checked");
   });
+
+  // Tooltip tests
+  
+  it("hides tooltips by default", () => {
+    cy.get(".tooltip").each(($tooltip) => {
+      cy.get($tooltip).should("have.css", "visibility", "hidden");
+    });
+  });
+
+  // Normal vs edit mode tests
 
   it("displays/hides UI components at the start", () => {
     cy.get("#tagList").should("have.css", "display", "flex");
