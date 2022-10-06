@@ -9,10 +9,23 @@ describe("extension popup", () => {
         window.chrome.storage = {
           sync: {
             // .get returns true for "redditToggled", false for all others
-            get: ([name], cb) => cb({ [name]: name === "redditToggled" }),
+            get: (_, cb) => {
+              const data = {
+                redditToggled: true,
+                twitterToggled: false,
+                blockedWords: ["train", "metro", "bus"],
+              };
+              return cb?.(data) || new Promise((cb) => cb(data));
+            },
             set: () => undefined, // no-op
           },
         };
+        window.chrome.tabs = {
+          query: async () => [{ url: "https://example.com" }],
+        };
+
+        // override window.open so that we can assert if it's called without a new tab opening
+        cy.stub(window, "open").as("openNewTab");
       },
     });
   });
@@ -49,5 +62,25 @@ describe("extension popup", () => {
 
     cy.get("#manageTagListBtn").should("have.css", "display", "flex");
     cy.get("#editTagsActions").should("have.css", "display", "none");
+  });
+
+  it("opens the correct help URL", () => {
+    cy.get("a#report-link").click();
+
+    const data =
+      "eyJyZWRkaXRUb2dnbGVkIjp0cnVlLCJ0d2l0dGVyVG9nZ2xlZCI6ZmFsc2UsImJsb2NrZWRXb3JkcyI6WyJ0cmFpbiIsIm1ldHJvIiwiYnVzIl0sImN1cnJlbnRVcmwiOiJodHRwczovL2V4YW1wbGUuY29tIn0=";
+    cy.get("@openNewTab").should(
+      "be.calledWith",
+      "https://politicry.com/report#" + data,
+      "_blank",
+      "noopener",
+    );
+
+    expect(JSON.parse(atob(data))).to.deep.equal({
+      redditToggled: true,
+      twitterToggled: false,
+      blockedWords: ["train", "metro", "bus"],
+      currentUrl: "https://example.com",
+    });
   });
 });
