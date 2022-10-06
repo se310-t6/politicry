@@ -351,6 +351,10 @@ input:checked + .slider:before {
   font-size: 14px;
 }
 
+.tooltip-element {
+  cursor: help;
+}
+
 .tooltip-element:hover .tooltip {
   visibility: visible;
 }
