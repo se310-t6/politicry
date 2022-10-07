@@ -25,7 +25,7 @@
     },
     {
       "js": ["worker/shared.js", "worker/facebook.js"],
-      "matches": ["https://facebook.com/*"]
+      "matches": ["https://m.facebook.com/*"]
     }
   ],
   "description": "A tool to remove political posts from popular social media platforms.",
