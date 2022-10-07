@@ -8,6 +8,7 @@ const toggleList = document.getElementById("toggleList");
 const redditSwitch = document.getElementById("redditSwitch");
 const instagramSwitch = document.getElementById("instagramSwitch");
 const twitterSwitch = document.getElementById("twitterSwitch");
+const facebookSwitch = document.getElementById("facebookSwitch")
 const addOtherSites = document.getElementById("addOtherSites");
 const globalSwitch = document.getElementById("globalSwitch");
 
@@ -16,6 +17,7 @@ const globalSwitchHandler = () => {
     redditSwitch.checked = false;
     instagramSwitch.checked = false;
     twitterSwitch.checked = false;
+    facebookSwitch.checked = false;
 
     toggleList.style.pointerEvents = "none";
     toggleList.style.opacity = "50%";
@@ -30,6 +32,7 @@ const switches = {
   redditToggled: redditSwitch,
   instagramToggled: instagramSwitch,
   twitterToggled: twitterSwitch,
+  facebookToggled: facebookSwitch,
   globalToggled: globalSwitch,
 };
 
