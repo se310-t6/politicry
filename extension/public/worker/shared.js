@@ -21,6 +21,7 @@ chrome.storage.sync.get(
       reddit: data.redditToggled,
       instagram: data.instagramToggled,
       twitter: data.twitterToggled,
+      facebook: data.facebookToggled,
     };
 
     // replace the blocklist with the list from chrome storage

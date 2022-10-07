@@ -6,6 +6,7 @@ function blurImage(img) {
 
 /** @param {HTMLDivElement} el */
 function checkPost(el) {
+    console.log("post checked")
     if (window.matchesBlocklist(el.innerText)) {
       el.style.filter = "blur(4px)";
     }
@@ -26,7 +27,7 @@ window.onceReady = () => {
     setInterval(() => {
       // check every visible facebook post, which can be identified since it's a
       // div with an attribute called lang="en". Politicry only supports English (for now)
-      document.querySelectorAll('div[lang="en"]').forEach(checkPost);
+      document.querySelectorAll('div[data-ad-preview="message"]').forEach(checkPost);
       //check image 
       document.querySelectorAll('img').forEach(checkImage);
     }, 1000);
