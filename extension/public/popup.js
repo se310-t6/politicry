@@ -1,6 +1,8 @@
 /// <reference types="chrome" />
 /* global chrome */
 
+const { version } = chrome.runtime.getManifest();
+
 /** ******** Enabled Sites **********/
 
 // UI references
@@ -231,10 +233,20 @@ document.querySelector("#report-link").addEventListener("click", async () => {
 
   const context = { ...settings, currentUrl: tabs[0].url };
 
-  // open the help page in a new tag, and append the data to the end of the URL
+  // open the report-issue page in a new tab, and append the data to the end of the URL
   window.open(
     `https://politicry.com/report#${btoa(JSON.stringify(context))}`,
     "_blank",
     "noopener",
   );
 });
+
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason == chrome.runtime.OnInstalledReason.INSTALL) {
+    // open the docs page in a new tab when the extension is first installed
+    window.open("https://politicry.com/help#/", "_blank", "noopener");
+  }
+});
+
+// update the version number in the UI based on the manifest.json file
+document.querySelector(".version > span").innerHTML = `Version ${version}`;
