@@ -20,5 +20,6 @@ describe("extension popup", () => {
   it("enables the correct checkboxes", () => {
     cy.get("#redditSwitch").should("be.checked");
     cy.get("#instagramSwitch").should("not.be.checked");
+    cy.get("#facebookSwtich").should("not.be.checked")
   });
 });
