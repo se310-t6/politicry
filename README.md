@@ -1,6 +1,7 @@
 # Politicry
 
 ![Test](https://github.com/se310-t6/politicry/actions/workflows/test.yml/badge.svg)
+![Healthcheck](https://github.com/se310-t6/politicry/actions/workflows/healthcheck.yml/badge.svg)
 ![Sonarcloud](https://github.com/se310-t6/politicry/actions/workflows/sonarcloud.yml/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=se310-t6_politicry&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=se310-t6_politicry)
