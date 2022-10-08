@@ -33,5 +33,5 @@
   "manifest_version": 3,
   "name": "Politicry",
   "permissions": ["activeTab", "scripting", "storage"],
-  "version": "1.0"
+  "version": "2.0.0"
 }
