@@ -15,7 +15,7 @@ window.defaultBlockedWordsList = [
 let blockedList = window.defaultBlockedWordsList;
 
 chrome.storage.sync.get(
-  ["blockedWords", "redditToggled", "instagramToggled", "twitterToggled"],
+  ["blockedWords", "redditToggled", "instagramToggled", "twitterToggled", "facebookToggled"],
   (data) => {
     window.enabled = {
       reddit: data.redditToggled,
