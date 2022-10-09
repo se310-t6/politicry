@@ -1,0 +1,17 @@
+name: Healthcheck
+
+on:
+  schedule:
+    - cron: "0 7 * * 1" # at 7am UTC on mondays
+
+jobs:
+  healthcheck:
+    name: Healthcheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Healthcheck for website & backend
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: https://politicry.com|https://politicry.com/api/1/register/
+          follow-redirect: true

@@ -25,8 +25,10 @@
 
     <div id="navBar" class="navbar-menu">
       <div class="navbar-end">
-        <a href="#about" class="navbar-item"> About </a>
-        <a href="#team" class="navbar-item"> The Team </a>
+        <a href="/#about" class="navbar-item"> About </a>
+        <a href="/#team" class="navbar-item"> The Team </a>
+        <a href="/help" class="navbar-item"> Docs </a>
+        <a href="/report" class="navbar-item"> Report Issue </a>
         <a href="https://se310-t6.github.io/politicry/" class="navbar-item">
           Api
           <b-icon icon="link" type="is-secondary" class="ml-2" />

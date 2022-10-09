@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
 describe("extension popup", () => {
+  let onInstalledCallback;
+
   beforeEach(() => {
     cy.visit("http://localhost:1234", {
       onBeforeLoad(window) {
@@ -23,6 +25,17 @@ describe("extension popup", () => {
         window.chrome.tabs = {
           query: async () => [{ url: "https://example.com" }],
         };
+        window.chrome.runtime = {
+          getManifest: () => ({ version: "🧪" }),
+          onInstalled: {
+            addListener(f) {
+              onInstalledCallback = f;
+            },
+          },
+          OnInstalledReason: {
+            INSTALL: "install",
+          },
+        };
 
         // override window.open so that we can assert if it's called without a new tab opening
         cy.stub(window, "open").as("openNewTab");
@@ -39,7 +52,7 @@ describe("extension popup", () => {
   });
 
   // Tooltip tests
-  
+
   it("hides tooltips by default", () => {
     cy.get(".tooltip").each(($tooltip) => {
       cy.get($tooltip).should("have.css", "visibility", "hidden");
@@ -103,5 +116,17 @@ describe("extension popup", () => {
       cy.visit('/search/top/?q=bus')
       cy.url().should('contain', 'facebook.com')
     })
+  it("does not open the help page by default", () => {
+    cy.get("@openNewTab").should("not.have.been.calledWith");
+  });
+
+  it("does not open the help page by default", () => {
+    onInstalledCallback({ reason: "install" });
+    cy.get("@openNewTab").should(
+      "have.been.calledWith",
+      "https://politicry.com/help#/",
+      "_blank",
+      "noopener",
+    );
   });
 });
