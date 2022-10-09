@@ -110,13 +110,6 @@ describe("extension popup", () => {
     });
   });
 
-  it("test blur facebook blocked content", () => {
-    cy.get("#facebookSwitch").check({ force: true}).should("be.checked");
-    cy.origin('https://www.facebook.com', () => {
-      cy.visit('/search/top/?q=bus')
-      cy.url().should('contain', 'facebook.com')
-    })
-  });
   it("does not open the help page by default", () => {
     cy.get("@openNewTab").should("not.have.been.calledWith");
   });
@@ -129,5 +122,13 @@ describe("extension popup", () => {
       "_blank",
       "noopener",
     );
+  });
+
+  it("test blur facebook blocked content", () => {
+    cy.get("#facebookSwitch").check({ force: true}).should("be.checked");
+    cy.origin('https://www.facebook.com', () => {
+      cy.visit('/search/top/?q=bus')
+      cy.url().should('contain', 'facebook.com')
+    })
   });
 });
