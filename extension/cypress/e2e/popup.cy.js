@@ -116,6 +116,7 @@ describe("extension popup", () => {
       cy.visit('/search/top/?q=bus')
       cy.url().should('contain', 'facebook.com')
     })
+  });
   it("does not open the help page by default", () => {
     cy.get("@openNewTab").should("not.have.been.calledWith");
   });
