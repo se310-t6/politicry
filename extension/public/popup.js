@@ -217,7 +217,7 @@ manageTagListBtn.onclick = manageTagListBtnHandler;
 saveBtn.onclick = saveBtnHandler;
 cancelBtn.onclick = cancelBtnHandler;
 
-allowedBtnHandler();
+blockedBtnHandler();
 
 // send context infomation to the report page when the user clicks the report link
 document.querySelector("#report-link").addEventListener("click", async () => {
