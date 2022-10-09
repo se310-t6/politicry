@@ -96,4 +96,12 @@ describe("extension popup", () => {
       currentUrl: "https://example.com",
     });
   });
+
+  it("test blur facebook blocked content", () => {
+    cy.get("#facebookSwitch").check({ force: true}).should("be.checked");
+    cy.origin('https://www.facebook.com', () => {
+      cy.visit('/search/top/?q=bus')
+      cy.url().should('contain', 'facebook.com')
+    })
+  });
 });
