@@ -28,8 +28,8 @@ chrome.storage.sync.get(
       blockedList = data.blockedWords;
     }
 
-    // lastly, call the "onceReady" function if it exists
-    window.onceReady?.();
+    // lastly, emit the "politicry-ready" event, which the other files listen for
+    document.dispatchEvent(new CustomEvent("politicry-ready"));
   },
 );
 

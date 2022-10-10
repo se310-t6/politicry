@@ -23,8 +23,8 @@
   "name": "politicry",
   "repository": "git@github.com:se310-t6/politicry.git",
   "scripts": {
-    "test:ci": "start-server-and-test 'parcel public/popup.html' 1234 'cypress run && nyc report --reporter=lcov --reporter=text-summary --x'",
-    "test": "start-server-and-test 'parcel public/popup.html' 1234 'cypress open'",
+    "test:ci": "start-server-and-test 'parcel public/popup.html public/worker-test.html' http://localhost:1234/popup.html 'cypress run && nyc report --reporter=lcov --reporter=text-summary --x'",
+    "test": "start-server-and-test 'parcel public/popup.html public/worker-test.html' http://localhost:1234/popup.html 'cypress open'",
     "build": "webpack --config webpack/webpack.config.js"
   },
   "version": "2.0.0"

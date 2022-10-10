@@ -5,7 +5,7 @@ function checkTweet(el) {
   }
 }
 
-window.onceReady = () => {
+document.addEventListener("politicry-ready", () => {
   // quit if twitter is not enabled
   if (!window.enabled.twitter) return;
 
@@ -15,4 +15,4 @@ window.onceReady = () => {
     // div with an attribute called lang="en". Politicry only supports English (for now)
     document.querySelectorAll('div[lang="en"]').forEach(checkTweet);
   }, 1000);
-};
+});
