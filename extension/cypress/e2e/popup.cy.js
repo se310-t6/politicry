@@ -43,6 +43,15 @@ describe("extension popup", () => {
     });
   });
 
+  // Allowed/Blocked tab tests
+
+  it("enabled the blocked words tab by default", () => {
+    cy.get("#manageTagListBtn").should("have.text", "Edit Blocked");
+    // Cypress detects rgb instead of hex colours
+    cy.get("#blockedBtn").should("have.css", "background-color", "rgb(33, 150, 243)"); // #2196F3
+    cy.get("#allowedBtn").should("have.css", "background-color", "rgb(153, 153, 153)"); //#999999
+  });
+
   // Checbox tests
 
   it("enables the correct checkboxes", () => {
