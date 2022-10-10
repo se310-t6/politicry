@@ -4,7 +4,7 @@ describe("extension popup", () => {
   let onInstalledCallback;
 
   beforeEach(() => {
-    cy.visit("http://localhost:1234", {
+    cy.visit("http://localhost:1234/popup.html", {
       onBeforeLoad(window) {
         // mock the chrome extension APIs
         if (!window.chrome) window.chrome = {};
