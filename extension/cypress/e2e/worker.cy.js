@@ -54,4 +54,16 @@ describe("extension worker", () => {
         .should("not.have.css", "filter", "blur(5px)");
     });
   });
+
+  describe("allowed", () => {
+    it("does not blur posts with allowed words", () => {
+      cy.get("#allowed div[lang='en']")
+        .first()
+        .should("not.have.css", "filter", "blur(4px)");
+
+      cy.get("#allowed div[lang='en']")
+        .last()
+        .should("not.have.css", "filter", "blur(4px)");
+    });
+  });
 });
