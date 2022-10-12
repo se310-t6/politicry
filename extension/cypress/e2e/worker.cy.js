@@ -35,11 +35,11 @@ describe("extension worker", () => {
     it("blurs the correct tweets", () => {
       cy.get("#twitter div[lang='en']")
         .first()
-        .should("have.css", "filter", "blur(4px)");
+        .should("have.css", "filter", "blur(20px)");
 
       cy.get("#twitter div[lang='en']")
         .last()
-        .should("not.have.css", "filter", "blur(4px)");
+        .should("not.have.css", "filter", "blur(20px)");
     });
   });
 
