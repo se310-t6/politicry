@@ -33,13 +33,13 @@ describe("extension worker", () => {
 
   describe("twitter", () => {
     it("blurs the correct tweets", () => {
-      cy.get("#twitter div[lang='en']")
+      cy.get("#twitter > article")
         .first()
-        .should("have.css", "filter", "blur(4px)");
+        .should("have.css", "filter", "blur(20px)");
 
-      cy.get("#twitter div[lang='en']")
+      cy.get("#twitter > article")
         .last()
-        .should("not.have.css", "filter", "blur(4px)");
+        .should("not.have.css", "filter", "blur(20px)");
     });
   });
 
