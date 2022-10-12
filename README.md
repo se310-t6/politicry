@@ -22,12 +22,17 @@ Politicry is a browser extension to filter political posts from your feed on pop
 
 ## Installation
 
-1. Build the extension as per the instructions below.
+1. Download and unzip the latest [release](https://github.com/se310-t6/politicry/releases). 
 2. Visit `chrome://extensions/` in your Chrome browser.
 3. Toggle Developer mode.
 4. Click on the "Load unpacked" button.
-5. Select the `politicy/extension/dist` folder.
+5. Select the unzipped folder.
 6. The Politicry extension card should show in your list of extensions.
+
+### For Developers
+If you would like to download the current, unreleased version of the extension in this repository:
+1. Build the extension as per the instructions below.
+2. Follow the instructions above, using the `politicy/extension/dist` folder instead. 
 
 ## Prerequisites
 
