@@ -13,9 +13,10 @@ window.defaultBlockedWordsList = [
 ];
 
 let blockedList = window.defaultBlockedWordsList;
+let allowedList = [];
 
 chrome.storage.sync.get(
-  ["blockedWords", "redditToggled", "instagramToggled", "twitterToggled"],
+  ["blockedWords", "allowedWords", "redditToggled", "instagramToggled", "twitterToggled"],
   (data) => {
     window.enabled = {
       reddit: data.redditToggled,
@@ -23,9 +24,13 @@ chrome.storage.sync.get(
       twitter: data.twitterToggled,
     };
 
-    // replace the blocklist with the list from chrome storage
+    // replace the allowed/blocked list with the list from chrome storage
     if (data.blockedWords && data.blockedWords.length) {
       blockedList = data.blockedWords;
+    }
+
+    if (data.allowedWords && data.allowedWords.length) {
+      allowedList = data.allowedWords;
     }
 
     // lastly, emit the "politicry-ready" event, which the other files listen for
@@ -33,6 +38,10 @@ chrome.storage.sync.get(
   },
 );
 
-/* returns true if the supplied text matches any word in the blocked list */
-window.matchesBlocklist = (text) =>
-  blockedList.some((word) => text.toLowerCase().includes(word.toLowerCase()));
+/* returns true if the supplied text matches any word in the blocked list 
+unless it contains an allowed word */
+window.matchesBlocklist = (text) => {
+  let hasAllowedWord = allowedList.some((word) => text.toLowerCase().includes(word.toLowerCase()))
+  let hasBlockedWord = blockedList.some((word) => text.toLowerCase().includes(word.toLowerCase()))
+  return !hasAllowedWord && hasBlockedWord
+}

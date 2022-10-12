@@ -10,7 +10,7 @@
 <----->
 
 All Red images ("Pizza") should be blurred. <br />
-All green images ("Sushi") should NOT be blurred.
+All green images ("Sushi" and "Chicken") should NOT be blurred.
 
 <main id="instagram">
   <h1>Instagram</h1>
@@ -55,6 +55,11 @@ All green images ("Sushi") should NOT be blurred.
     <img src="https://via.placeholder.com/140x140/12e377/ffffff?text=Sushi" />
   </div>
 </main>
+<main id="allowed">
+  <h1>Posts with allowed words</h1>
+  <div lang="en">🟢 This post is about Pizza and Chicken 🟢</div>
+  <div lang="en">🟢 This post is about Chicken 🟢</div>
+</main>
 <script>
   // this file is used for testing the worker code.
   window.chrome ||= {};
@@ -62,10 +67,15 @@ All green images ("Sushi") should NOT be blurred.
   window.chrome.storage.sync ||= {};
 
   // mock the chrome user preferences
-  window.chrome.storage.sync.get = (keys, cb) =>
+  window.chrome.storage.sync.get = (_, cb) =>
     setTimeout(
-      () => cb(Object.fromEntries(keys.map((key) => [key, true]))),
-      100,
+      () => cb({ 
+        redditToggled: true,
+        instagramToggled: true,
+        twitterToggled: true,
+        blockedWords: ["pizza"], 
+        allowedWords: ["chicken"] ,
+      }), 100,
     );
 </script>
 <!-- <script src="./tesseract.min.js" defer></script> -->

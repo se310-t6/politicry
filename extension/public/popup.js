@@ -86,8 +86,8 @@ const renderAllowedWords = () => {
   hideTagsEdit();
 
   chrome.storage.sync.get(["allowedWords"], (data) => {
-    const allowedWordsData = data.allowedWords;
-    if (allowedWordsData === undefined || allowedWordsData.length === 0) {
+    let allowedWordsData = data.allowedWords;
+    if (allowedWordsData.length === 0) {
       tagList.innerHTML = "No keywords set!";
       return;
     }
@@ -116,9 +116,7 @@ const renderBlockedWords = () => {
   hideTagsEdit();
   chrome.storage.sync.get(["blockedWords"], (data) => {
     let blockedWordsData = data.blockedWords;
-    if (!blockedWordsData) {
-      blockedWordsData = window.defaultBlockedWordsList;
-    } else if (blockedWordsData.length === 0) {
+    if (blockedWordsData.length === 0) {
       tagList.innerHTML = "No keywords set!";
       return;
     }
@@ -151,13 +149,11 @@ const renderTagsEdit = () => {
 
   if (manageTagListBtn.innerHTML === "Edit Allowed") {
     chrome.storage.sync.get(["allowedWords"], (data) => {
-      editTagsTextArea.value = arrayToCsv(data.allowedWords || []);
+      editTagsTextArea.value = arrayToCsv(data.allowedWords);
     });
   } else {
     chrome.storage.sync.get(["blockedWords"], (data) => {
-      let list = data.blockedWords;
-      if (!list) list = window.defaultBlockedWordsList;
-      editTagsTextArea.value = arrayToCsv(list);
+      editTagsTextArea.value = arrayToCsv(data.blockedWords);
     });
   }
 };
@@ -217,7 +213,23 @@ manageTagListBtn.onclick = manageTagListBtnHandler;
 saveBtn.onclick = saveBtnHandler;
 cancelBtn.onclick = cancelBtnHandler;
 
-blockedBtnHandler();
+// set initial value of allowed/blocked list if it doesn't exist
+chrome.storage.sync.get(["allowedWords"], (data) => {
+  if (!data.allowedWords) {
+    chrome.storage.sync.set({ allowedWords: [] });
+  }
+  
+});
+
+chrome.storage.sync.get(["blockedWords"], (data) => {
+  if (!data.blockedWords) {
+    chrome.storage.sync.set({ blockedWords: window.defaultBlockedWordsList });
+  }
+
+  // blocked tab is clicked on start-up
+  // must be called after blockedWords exists (is not undefined)
+  blockedBtnHandler();  
+});
 
 // send context infomation to the report page when the user clicks the report link
 document.querySelector("#report-link").addEventListener("click", async () => {
