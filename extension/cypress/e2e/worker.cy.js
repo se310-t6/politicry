@@ -33,11 +33,11 @@ describe("extension worker", () => {
 
   describe("twitter", () => {
     it("blurs the correct tweets", () => {
-      cy.get("#twitter article")
+      cy.get("#twitter > article")
         .first()
         .should("have.css", "filter", "blur(20px)");
 
-      cy.get("#twitter article")
+      cy.get("#twitter > article")
         .last()
         .should("not.have.css", "filter", "blur(20px)");
     });
