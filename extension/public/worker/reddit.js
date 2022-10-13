@@ -103,13 +103,6 @@ const Reddit = {
       "none";
   },
 
-  // retrieve the post link
-  getDOMLink(_post) {
-    const classSelector = ".SQnoC3ObvgnGjWt90zD9Z";
-    const url = _post.querySelector(classSelector).getAttribute("href");
-    // console.log("post url: " + "www.reddit.com" + url); // DEBUG
-  },
-
   // retrive the posts iamge link
   getDOMImageLink(_post) {
     const classSelector = "._2_tDEnGMLxpM6uOa2kaDB3";
@@ -142,4 +135,4 @@ const Reddit = {
   },
 };
 
-window.onceReady = () => Reddit.initialize();
+document.addEventListener("politicry-ready", () => Reddit.initialize());

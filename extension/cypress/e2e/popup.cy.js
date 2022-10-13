@@ -4,7 +4,7 @@ describe("extension popup", () => {
   let onInstalledCallback;
 
   beforeEach(() => {
-    cy.visit("http://localhost:1234", {
+    cy.visit("http://localhost:1234/popup.html", {
       onBeforeLoad(window) {
         // mock the chrome extension APIs
         if (!window.chrome) window.chrome = {};
@@ -16,6 +16,7 @@ describe("extension popup", () => {
                 redditToggled: true,
                 twitterToggled: false,
                 blockedWords: ["train", "metro", "bus"],
+                allowedWords: ["chicken"],
               };
               return cb?.(data) || new Promise((cb) => cb(data));
             },
@@ -41,6 +42,15 @@ describe("extension popup", () => {
         cy.stub(window, "open").as("openNewTab");
       },
     });
+  });
+
+  // Allowed/Blocked tab tests
+
+  it("enabled the blocked words tab by default", () => {
+    cy.get("#manageTagListBtn").should("have.text", "Edit Blocked");
+    // Cypress detects rgb instead of hex colours
+    cy.get("#blockedBtn").should("have.css", "background-color", "rgb(33, 150, 243)"); // #2196F3
+    cy.get("#allowedBtn").should("have.css", "background-color", "rgb(153, 153, 153)"); //#999999
   });
 
   // Checbox tests
@@ -94,7 +104,7 @@ describe("extension popup", () => {
     cy.get("a#report-link").click();
 
     const data =
-      "eyJyZWRkaXRUb2dnbGVkIjp0cnVlLCJ0d2l0dGVyVG9nZ2xlZCI6ZmFsc2UsImJsb2NrZWRXb3JkcyI6WyJ0cmFpbiIsIm1ldHJvIiwiYnVzIl0sImN1cnJlbnRVcmwiOiJodHRwczovL2V4YW1wbGUuY29tIn0=";
+      "eyJyZWRkaXRUb2dnbGVkIjp0cnVlLCJ0d2l0dGVyVG9nZ2xlZCI6ZmFsc2UsImJsb2NrZWRXb3JkcyI6WyJ0cmFpbiIsIm1ldHJvIiwiYnVzIl0sImFsbG93ZWRXb3JkcyI6WyJjaGlja2VuIl0sImN1cnJlbnRVcmwiOiJodHRwczovL2V4YW1wbGUuY29tIn0=";
     cy.get("@openNewTab").should(
       "be.calledWith",
       "https://politicry.com/report#" + data,
@@ -106,6 +116,7 @@ describe("extension popup", () => {
       redditToggled: true,
       twitterToggled: false,
       blockedWords: ["train", "metro", "bus"],
+      allowedWords: ["chicken"],
       currentUrl: "https://example.com",
     });
   });

@@ -39,7 +39,7 @@ function checkImage(img) {
   }
 }
 
-window.onceReady = () => {
+document.addEventListener("politicry-ready", () => {
   // part 0: quit if instagram is not enabled
   if (!window.enabled.instagram) return;
 
@@ -51,4 +51,4 @@ window.onceReady = () => {
     // part 2: check the alt-text of every image
     document.querySelectorAll("img").forEach(checkImage);
   }, 1000);
-};
+});

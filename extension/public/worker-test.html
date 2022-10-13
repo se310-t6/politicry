@@ -1,0 +1,99 @@
+<!---!>
+  This file exists purely for integration tests.
+  It lets us test the blurring logic in a controlled environment.
+
+  Navigating to the real facebook.com everytime tests run is against
+  facebook's terms of service, and we would likely get blocked for using
+  a bot.
+
+  It is much easier and reliable to use this test html file instead.
+<----->
+
+All Red images ("Pizza") should be blurred. <br />
+All green images ("Sushi" and "Chicken") should NOT be blurred.
+
+<main id="instagram">
+  <h1>Instagram</h1>
+  <img
+    src="https://via.placeholder.com/140x140/ff0000/ffffff?text=Pizza"
+    alt="Pizza"
+  />
+  <img
+    src="https://via.placeholder.com/140x140/12e377/ffffff?text=Sushi"
+    alt="Sushi"
+  />
+
+  <ul>
+    <img src="https://via.placeholder.com/140x140/ff0000/ffffff?text=Pizza" />
+    <li role="menuitem">This post is about Pizza</li>
+  </ul>
+
+  <ul>
+    <img src="https://via.placeholder.com/140x140/12e377/ffffff?text=Sushi" />
+    <li role="menuitem">This post is about Sushi</li>
+  </ul>
+</main>
+
+<main id="twitter">
+  <h1>Twitter</h1>
+  <article>
+    <div lang="en">🔴 This tweet is about Pizza 🔴</div>
+  </article>
+  <article>
+    <div lang="en">🟢 This tweet is about Sushi 🟢</div>
+  </article>
+</main>
+
+<main id="reddit">
+  <h1>Reddit</h1>
+
+  <div class="scrollerItem" id="r1">
+    <span class="_eYtD2XCVieq6emjKBH3m">🔴 Reddit article about Pizza 🔴</span>
+    <br />
+    <img src="https://via.placeholder.com/140x140/ff0000/ffffff?text=Pizza" />
+  </div>
+
+  <div class="scrollerItem" id="r2">
+    <span class="_eYtD2XCVieq6emjKBH3m">🟢 Reddit article about Sushi 🟢</span>
+    <br />
+    <img src="https://via.placeholder.com/140x140/12e377/ffffff?text=Sushi" />
+  </div>
+</main>
+<main id="allowed">
+  <h1>Posts with allowed words</h1>
+  <div lang="en">🟢 This post is about Pizza and Chicken 🟢</div>
+  <div lang="en">🟢 This post is about Chicken 🟢</div>
+</main>
+
+<main id="facebook">
+  <h1>Facebook</h1>
+  <article>
+    <div lang="en">🔴 This tweet is about Pizza 🔴</div>
+  </article>
+  <article>
+    <div lang="en">🟢 This tweet is about Sushi 🟢</div>
+  </article>
+</main>
+<script>
+  // this file is used for testing the worker code.
+  window.chrome ||= {};
+  window.chrome.storage ||= {};
+  window.chrome.storage.sync ||= {};
+
+  // mock the chrome user preferences
+  window.chrome.storage.sync.get = (_, cb) =>
+    setTimeout(
+      () => cb({ 
+        redditToggled: true,
+        instagramToggled: true,
+        twitterToggled: true,
+        blockedWords: ["pizza"], 
+        allowedWords: ["chicken"] ,
+      }), 100,
+    );
+</script>
+<!-- <script src="./tesseract.min.js" defer></script> -->
+<script src="./worker/shared.js" defer></script>
+<script src="./worker/instagram.js" defer></script>
+<script src="./worker/reddit.js" defer></script>
+<script src="./worker/twitter.js" defer></script>
