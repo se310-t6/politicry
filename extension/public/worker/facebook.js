@@ -19,7 +19,7 @@ function checkImage(img) {
     }
 }
 
-window.onceReady = () => {
+document.addEventListener("politicry-ready", () => {
 // quit if facebook is not enabled
     if (!window.enabled.facebook) return;
   
@@ -31,4 +31,4 @@ window.onceReady = () => {
       //check image 
       document.querySelectorAll('img').forEach(checkImage);
     }, 1000);
-};
+});
