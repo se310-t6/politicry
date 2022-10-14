@@ -44,14 +44,15 @@ describe("extension worker", () => {
   });
 
   describe("facebook", () => {
-    it("blurs the correct facebook post", () => {
+    it("blurs the correct facebook post and image", () => {
+      cy.get("#facebook > article")
+        .last()
+        .should("not.have.css", "filter", "blur(20px)");
       cy.get("#facebook > article")
         .first()
         .should("have.css", "filter", "blur(20px)");
 
-      cy.get("#facebook > article")
-        .last()
-        .should("not.have.css", "filter", "blur(20px)");
+      
     });
   });
 
