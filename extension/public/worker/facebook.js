@@ -26,7 +26,7 @@ document.addEventListener("politicry-ready", () => {
     // check every 1 second if a new post has been loaded
     setInterval(() => {
       // check every visible facebook post, which can be identified since it's a
-      // div with an attribute called lang="en". Politicry only supports English (for now)
+      // div with an attribute called data-ad-preview="message"
       document.querySelectorAll('div[data-ad-preview="message"]').forEach(checkPost);
       //check image 
       document.querySelectorAll('img').forEach(checkImage);
