@@ -58,6 +58,7 @@ describe("extension popup", () => {
   it("enables the correct checkboxes", () => {
     cy.get("#redditSwitch").should("be.checked");
     cy.get("#instagramSwitch").should("not.be.checked");
+    cy.get("#facebookSwitch").should("not.be.checked");
   });
 
   // Tooltip tests
@@ -132,5 +133,13 @@ describe("extension popup", () => {
       "_blank",
       "noopener",
     );
+  });
+
+  it("test blur facebook blocked content", () => {
+    cy.get("#facebookSwitch").check({ force: true}).should("be.checked");
+    cy.origin('https://www.facebook.com', () => {
+      cy.visit('/search/top/?q=bus')
+      cy.url().should('contain', 'facebook.com')
+    })
   });
 });
